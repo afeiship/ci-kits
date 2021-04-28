@@ -90,7 +90,9 @@
   "dependencies": {
     "@jswork/next-is-empty-object": "^1.0.1",
     "@jswork/noop": "^1.0.0",
+    "@jswork/react-admin-icons": "^1.0.0",
     "antd": "^4.15.3",
+    "antd-form-builder": "^2.1.2",
     "classnames": "^2.2.6"
   },
   "publishConfig": {

@@ -10,7 +10,17 @@
     width: 50%;
     min-width: 320px;
     margin: 0 auto;
+  }
 
-    text-align: center;
+  .mr-5_ {
+    > * {
+      margin-right: 5px;
+    }
+  }
+
+  .mr-10_ {
+    > * {
+      margin-right: 10px;
+    }
   }
 }

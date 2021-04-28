@@ -2,10 +2,15 @@ import noop from '@jswork/noop';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Card, Button, message } from 'antd';
+import { Form, Card, Button, message } from 'antd';
+import FormBuilder from 'antd-form-builder';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
+import ReactAdminIcons from '@jswork/react-admin-icons';
 
 const CLASS_NAME = 'react-ant-abstract-form';
+
+// https://github.com/rekit/antd-form-builder
+// https://rekit.github.io/antd-form-builder/examples-v4/
 
 export default class ReactAntAbstractForm extends Component {
   static displayName = CLASS_NAME;
@@ -20,11 +25,19 @@ export default class ReactAntAbstractForm extends Component {
   static defaultProps = {};
 
   resources = 'curds';
+  size = 'small';
+
+  constructor(inProps) {
+    super(inProps);
+    this.state = {
+      meta: {}
+    };
+  }
 
   get titleView() {
     return (
       <span className="mr-5_ mr_">
-        {/* <Icon type="form" /> */}
+        <ReactAdminIcons value="form" />
         <span>操作面板</span>
       </span>
     );
@@ -42,49 +55,75 @@ export default class ReactAntAbstractForm extends Component {
     return (
       <div className="is-extra">
         <Button size={'small'}>
+          <ReactAdminIcons size={12} value="return" />
           返回
         </Button>
       </div>
     );
   }
 
+  get submitView() {
+    return (
+      <Form.Item wrapperCol={{ span: 18, offset: 6 }}>
+        <div className="mr-10_ mr_">
+          <Button htmlType="submit" type="primary">
+            Submit
+          </Button>
+          <Button htmlType="reset" type="default">
+            Cancel
+          </Button>
+        </div>
+      </Form.Item>
+    );
+  }
+
   componentDidMount() {
-    // this.initUpsert();
+    this.handleInit();
   }
 
-  initUpsert() {
+  handleInit() {
     if (this.isEdit) {
-      this.$api[`${this.resources}_show`](this.params).then((res) => {
-        this.setState({
-          fieldsValue: nx.antFieldsValue(res)
-        });
-      });
+      return nx.$api[`${this.resources}_show`](this.params);
     }
+    return Promise.resolve();
   }
 
-  handleSubmit = (inEvent) => {
+  handleFinish = (inEvent) => {
     const action = this.isEdit ? 'update' : 'create';
     const data = nx.mix(null, this.params, inEvent);
-    return new Promise((resolve) => {
-      this.$api[`${this.resources}_${action}`](data).then((res) => {
-        message.info('操作成功');
-        resolve();
-      });
+    return new Promise((resolve, reject) => {
+      nx.$api[`${this.resources}_${action}`](data)
+        .then((res) => {
+          message.info('操作成功');
+          resolve(res);
+        })
+        .catch(reject);
     });
   };
 
-  render() {
-    const { className, children, ...props } = this.props;
-
+  view() {
+    const { className, ...props } = this.props;
+    const { meta } = this.state;
     return (
       <Card
+        size={this.size}
         title={this.titleView}
         extra={this.extraView}
         data-component={CLASS_NAME}
         className={classNames('m-10', CLASS_NAME, className)}
         {...props}>
-        FORM START HERE@
+        <Form
+          ref={(formRef) => (this.formRef = formRef)}
+          onFinish={this.handleFinish}
+          onValuesChange={() => this.forceUpdate()}>
+          <FormBuilder meta={meta} form={this.formRef} />
+          {this.submitView}
+        </Form>
       </Card>
     );
+  }
+
+  render() {
+    return null;
   }
 }
