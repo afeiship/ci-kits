@@ -15,8 +15,6 @@ npm install -S @jswork/react-ant-abstract-form
 | Name      | Type   | Required | Default | Description                           |
 | --------- | ------ | -------- | ------- | ------------------------------------- |
 | className | string | false    | -       | The extended className for component. |
-| value     | object | false    | null    | The changed value.                    |
-| onChange  | func   | false    | noop    | The change handler.                   |
 
 
 ## usage
@@ -38,14 +36,47 @@ npm install -S @jswork/react-ant-abstract-form
   import ReactAntAbstractForm from '@jswork/react-ant-abstract-form';
   import './assets/style.scss';
 
-  class App extends React.Component {
+  // Mock api
+  nx.$api = {
+    curds_index: function () {
+      return Promise.resolve('index');
+    },
+    curds_show: function () {
+      return Promise.resolve('show');
+    },
+    curds_update: function () {
+      return Promise.resolve('update');
+    }
+  };
+
+  class App extends ReactAntAbstractForm {
+    constructor(props) {
+      super(props);
+      this.state = {
+        meta: {
+          formItemLayout: [6, 18],
+          initialValues: {
+            username: 'afeiship'
+          },
+          fields: [
+            {
+              key: 'username',
+              label: 'User Name',
+              tooltip: '用户名',
+              rules: [{ max: 10, min: 5 }]
+            },
+            { key: 'password', label: 'Password', widget: 'password' }
+          ]
+        }
+      };
+    }
+
     render() {
       return (
         <ReactDemokit
           className="p-3 app-container"
           url="https://github.com/afeiship/react-ant-abstract-form">
-          <ReactAntAbstractForm className="mb-5 has-text-white" />
-          <button className="button is-primary is-fullwidth">Start~</button>
+          {this.view()}
         </ReactDemokit>
       );
     }
