@@ -17,7 +17,15 @@ nx.$api = {
   }
 };
 
+nx.$route = {
+  back: function () {
+    console.log('back');
+  }
+};
+
 class App extends ReactAntAbstractForm {
+  apiService = nx.$api;
+  routeService = nx.$route;
   constructor(props) {
     super(props);
     this.state = {

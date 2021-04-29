@@ -54,7 +54,7 @@ export default class ReactAntAbstractForm extends Component {
   get extraView() {
     return (
       <div className="is-extra">
-        <Button size={'small'}>
+        <Button size={'small'} onClick={nx.$route.back}>
           <ReactAdminIcons size={12} value="return" />
           返回
         </Button>
@@ -83,7 +83,7 @@ export default class ReactAntAbstractForm extends Component {
 
   handleInit() {
     if (this.isEdit) {
-      return nx.$api[`${this.resources}_show`](this.params);
+      return this.apiService[`${this.resources}_show`](this.params);
     }
     return Promise.resolve();
   }
@@ -92,7 +92,7 @@ export default class ReactAntAbstractForm extends Component {
     const action = this.isEdit ? 'update' : 'create';
     const data = nx.mix(null, this.params, inEvent);
     return new Promise((resolve, reject) => {
-      nx.$api[`${this.resources}_${action}`](data)
+      this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
           message.info('操作成功');
           resolve(res);
