@@ -26,6 +26,7 @@ export default class ReactAntAbstractForm extends Component {
 
   resources = 'curds';
   size = 'small';
+  options = {};
 
   constructor(inProps) {
     super(inProps);
@@ -83,14 +84,15 @@ export default class ReactAntAbstractForm extends Component {
 
   handleInit() {
     if (this.isEdit) {
-      return this.apiService[`${this.resources}_show`](this.params);
+      const data = nx.mix(null, this.params, this.options);
+      return this.apiService[`${this.resources}_show`](data);
     }
     return Promise.resolve();
   }
 
   handleFinish = (inEvent) => {
     const action = this.isEdit ? 'update' : 'create';
-    const data = nx.mix(null, this.params, inEvent);
+    const data = nx.mix(null, this.params, inEvent, this.options);
     return new Promise((resolve, reject) => {
       this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
