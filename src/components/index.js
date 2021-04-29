@@ -67,10 +67,10 @@ export default class ReactAntAbstractForm extends Component {
       <Form.Item wrapperCol={{ span: 18, offset: 6 }}>
         <div className="mr-10_ mr_">
           <Button htmlType="submit" type="primary">
-            Submit
+            提交
           </Button>
           <Button htmlType="reset" type="default">
-            Cancel
+            取消
           </Button>
         </div>
       </Form.Item>
