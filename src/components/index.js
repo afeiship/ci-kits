@@ -85,7 +85,10 @@ export default class ReactAntAbstractForm extends Component {
   handleInit() {
     if (this.isEdit) {
       const data = nx.mix(null, this.params, this.options);
+      const { meta } = this.state;
       this.apiService[`${this.resources}_show`](data).then((res) => {
+        nx.mix(meta.initialValues, res);
+        this.setState({ meta });
         this.formRef.setFieldsValue(res);
       });
     }

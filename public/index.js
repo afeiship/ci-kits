@@ -31,9 +31,7 @@ class App extends ReactAntAbstractForm {
     this.state = {
       meta: {
         formItemLayout: [6, 18],
-        initialValues: {
-          username: 'afeiship'
-        },
+        initialValues: {},
         fields: [
           {
             key: 'username',
@@ -45,6 +43,14 @@ class App extends ReactAntAbstractForm {
         ]
       }
     };
+  }
+
+  componentDidMount() {
+    const { meta } = this.state;
+    meta.initialValues = {
+      username: 'afeiship'
+    };
+    this.setState({ meta });
   }
 
   render() {
