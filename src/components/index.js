@@ -55,7 +55,7 @@ export default class ReactAntAbstractForm extends Component {
   get extraView() {
     return (
       <div className="is-extra">
-        <Button size={'small'} onClick={nx.$route.back}>
+        <Button size={'small'} onClick={() => this.routeService.back()}>
           <ReactAdminIcons size={12} value="return" />
           返回
         </Button>
@@ -85,7 +85,9 @@ export default class ReactAntAbstractForm extends Component {
   handleInit() {
     if (this.isEdit) {
       const data = nx.mix(null, this.params, this.options);
-      return this.apiService[`${this.resources}_show`](data);
+      this.apiService[`${this.resources}_show`](data).then((res) => {
+        this.formRef.setFieldsValue(res);
+      });
     }
     return Promise.resolve();
   }
@@ -112,8 +114,7 @@ export default class ReactAntAbstractForm extends Component {
         title={this.titleView}
         extra={this.extraView}
         data-component={CLASS_NAME}
-        className={classNames('m-10', CLASS_NAME, className)}
-        {...props}>
+        className={classNames('m-10', CLASS_NAME, className)}>
         <Form
           ref={(formRef) => (this.formRef = formRef)}
           onFinish={this.handleFinish}
