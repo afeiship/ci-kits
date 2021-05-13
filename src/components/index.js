@@ -27,6 +27,10 @@ export default class ReactAntAbstractForm extends Component {
   resources = 'curds';
   size = 'small';
   options = {};
+  actions = {
+    reset: true,
+    redirect: true
+  };
 
   constructor(inProps) {
     super(inProps);
@@ -64,15 +68,18 @@ export default class ReactAntAbstractForm extends Component {
   }
 
   get submitView() {
+    const { reset } = this.actions;
     return (
       <Form.Item wrapperCol={{ span: 18, offset: 6 }}>
         <div className="mr-10_ mr_">
           <Button htmlType="submit" type="primary">
-            提交
+            保存
           </Button>
-          <Button htmlType="reset" type="default">
-            取消
-          </Button>
+          {reset && (
+            <Button htmlType="reset" type="default">
+              取消
+            </Button>
+          )}
         </div>
       </Form.Item>
     );
@@ -98,10 +105,12 @@ export default class ReactAntAbstractForm extends Component {
   handleFinish = (inEvent) => {
     const action = this.isEdit ? 'update' : 'create';
     const data = nx.mix(null, this.params, inEvent, this.options);
+    const { redirect } = this.actions;
     return new Promise((resolve, reject) => {
       this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
           message.info('操作成功');
+          redirect && this.routeService.back();
           resolve(res);
         })
         .catch(reject);
