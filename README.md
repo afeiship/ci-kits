@@ -63,9 +63,7 @@ npm install -S @jswork/react-ant-abstract-form
       this.state = {
         meta: {
           formItemLayout: [6, 18],
-          initialValues: {
-            username: 'afeiship'
-          },
+          initialValues: {},
           fields: [
             {
               key: 'username',
@@ -77,6 +75,14 @@ npm install -S @jswork/react-ant-abstract-form
           ]
         }
       };
+    }
+
+    componentDidMount() {
+      const { meta } = this.state;
+      meta.initialValues = {
+        username: 'afeiship'
+      };
+      this.setState({ meta });
     }
 
     render() {
