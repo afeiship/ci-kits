@@ -87,6 +87,7 @@ export default class ReactAntAbstractForm extends Component {
 
   componentDidMount() {
     this.handleInit();
+    nx.set(this.routeService, 'current', this.props);
   }
 
   handleInit() {
