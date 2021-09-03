@@ -130,7 +130,7 @@ export default class ReactAntAbstractForm extends Component {
         title={this.titleView}
         extra={this.extraView}
         data-component={CLASS_NAME}
-        className={classNames('m-10', CLASS_NAME, className)}>
+        className={classNames(CLASS_NAME, className)}>
         <Form
           ref={(formRef) => (this.formRef = formRef)}
           onFinish={this.handleFinish}
