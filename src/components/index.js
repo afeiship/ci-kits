@@ -93,14 +93,24 @@ export default class ReactAntAbstractForm extends Component {
     }, 0);
   }
 
+  /**
+   * Template method.
+   * @param {*} inData
+   * @returns
+   */
+  setResponse(inData) {
+    return inData;
+  }
+
   handleInit() {
     if (this.isEdit) {
       const data = nx.mix(null, this.params, this.options);
       const { meta } = this.state;
       this.apiService[`${this.resources}_show`](data).then((res) => {
-        nx.mix(meta.initialValues, res);
+        const response = this.setResponse(res);
+        nx.mix(meta.initialValues, response);
         this.setState({ meta });
-        this.formRef.setFieldsValue(res);
+        this.formRef.setFieldsValue(response);
       });
     }
     return Promise.resolve();
