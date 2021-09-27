@@ -1,6 +1,6 @@
 {
   "name": "@jswork/react-ant-abstract-form",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "For curd form based on react.",
   "main": "dist/index.js",
   "scripts": {
