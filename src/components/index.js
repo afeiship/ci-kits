@@ -69,8 +69,10 @@ export default class ReactAntAbstractForm extends Component {
 
   get submitView() {
     const { reset } = this.actions;
+    const { formItemLayout } = this.state.meta;
     return (
-      <Form.Item wrapperCol={{ span: 18, offset: 6 }}>
+      <Form.Item
+        wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
         <div className="mr-10_ mr_">
           <Button htmlType="submit" type="primary">
             保存
