@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { Form, Card, Button, message } from 'antd';
 import FormBuilder from 'antd-form-builder';
 import nx from '@jswork/next';
@@ -143,7 +143,7 @@ export default class ReactAntAbstractForm extends Component<
     });
   };
 
-  view(): React.ReactNode {
+  view(): ReactNode {
     const { className } = this.props;
     const { meta } = this.state;
     return (
@@ -164,7 +164,7 @@ export default class ReactAntAbstractForm extends Component<
     );
   }
 
-  render() {
+  render(): ReactNode {
     return null;
   }
 }
