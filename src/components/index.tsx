@@ -110,9 +110,7 @@ export default class ReactAntAbstractForm extends Component<
    * @param {*} inData
    * @returns
    */
-  setResponse(inData) {
-    return inData;
-  }
+  setResponse: nx.stubValue;
 
   handleInit() {
     if (this.isEdit) {
