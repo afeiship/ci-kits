@@ -11,98 +11,40 @@
 npm install -S @jswork/react-ant-abstract-form
 ```
 
-## properties
-| Name      | Type   | Required | Default | Description                           |
-| --------- | ------ | -------- | ------- | ------------------------------------- |
-| className | string | false    | -       | The extended className for component. |
-
-
 ## usage
 1. import css
   ```scss
-  @import "~@jswork/react-ant-abstract-form/dist/style.css";
+  @import "~@jswork/boilerplate-react-component/dist/style.css";
 
   // or use sass
-  @import "~@jswork/react-ant-abstract-form/dist/style.scss";
+  @import "~@jswork/boilerplate-react-component/dist/style.scss";
 
   // customize your styles:
-  $react-ant-abstract-form-options: ()
+  $boilerplate-react-component-options: ()
   ```
 2. import js
   ```js
-  import ReactDemokit from '@jswork/react-demokit';
   import React from 'react';
-  import ReactDOM from 'react-dom';
-  import ReactAntAbstractForm from '@jswork/react-ant-abstract-form';
-  import './assets/style.scss';
+  import ReactAntAbstractForm from '@jswork/boilerplate-react-component';
+  import styled from 'styled-components';
 
-  // Mock api
-  nx.$api = {
-    curds_index: function () {
-      return Promise.resolve('index');
-    },
-    curds_show: function () {
-      return Promise.resolve('show');
-    },
-    curds_update: function () {
-      return Promise.resolve('update');
-    }
+  const Container = styled.div`
+    width: 80%;
+    margin: 30px auto 0;
+  `;
+
+  export default (props: any) => {
+    return (
+      <Container>
+        <ReactAntAbstractForm />
+      </Container>
+    );
   };
-
-  nx.$route = {
-    back: function () {
-      console.log('back');
-    }
-  };
-
-  class App extends ReactAntAbstractForm {
-    apiService = nx.$api;
-    routeService = nx.$route;
-    constructor(props) {
-      super(props);
-      this.state = {
-        meta: {
-          formItemLayout: [6, 18],
-          initialValues: {},
-          fields: [
-            {
-              key: 'username',
-              label: 'User Name',
-              tooltip: '用户名',
-              rules: [{ max: 10, min: 5 }]
-            },
-            { key: 'password', label: 'Password', widget: 'password' }
-          ]
-        }
-      };
-    }
-
-    componentDidMount() {
-      const { meta } = this.state;
-      meta.initialValues = {
-        username: 'afeiship'
-      };
-      this.setState({ meta });
-    }
-
-    render() {
-      return (
-        <ReactDemokit
-          className="p-3 app-container"
-          url="https://github.com/afeiship/react-ant-abstract-form">
-          {this.view()}
-        </ReactDemokit>
-      );
-    }
-  }
-
-  ReactDOM.render(<App />, document.getElementById('app'));
 
   ```
 
-## documentation
+## preview
 - https://afeiship.github.io/react-ant-abstract-form/
-
 
 ## license
 Code released under [the MIT license](https://github.com/afeiship/react-ant-abstract-form/blob/master/LICENSE.txt).

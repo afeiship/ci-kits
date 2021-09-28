@@ -1,8 +1,31 @@
-import ReactDemokit from '@jswork/react-demokit';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactAntAbstractForm from '../src/main';
-import './assets/style.scss';
+import ReactAntAbstractForm from '../../src/main';
+import styled from 'styled-components';
+import nx from '@jswork/next';
+
+const Container = styled.div`
+  width: 80%;
+  margin: 30px auto 0;
+  .is-body {
+    padding: 20px;
+    background: #fff;
+    width: 50%;
+    min-width: 320px;
+    margin: 0 auto;
+  }
+
+  .mr-5_ {
+    > * {
+      margin-right: 5px;
+    }
+  }
+
+  .mr-10_ {
+    > * {
+      margin-right: 10px;
+    }
+  }
+`;
 
 // Mock api
 nx.$api = {
@@ -26,6 +49,7 @@ nx.$route = {
 class App extends ReactAntAbstractForm {
   apiService = nx.$api;
   routeService = nx.$route;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -54,14 +78,14 @@ class App extends ReactAntAbstractForm {
   }
 
   render() {
-    return (
-      <ReactDemokit
-        className="p-3 app-container"
-        url="https://github.com/afeiship/react-ant-abstract-form">
-        {this.view()}
-      </ReactDemokit>
-    );
+    return this.view();
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+export default () => {
+  return (
+    <Container>
+      <App />
+    </Container>
+  );
+};

@@ -1,36 +1,47 @@
-import noop from '@jswork/noop';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Form, Card, Button, message } from 'antd';
 import FormBuilder from 'antd-form-builder';
+import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
 import ReactAdminIcons from '@jswork/react-admin-icons';
+import { CardSize } from 'antd/es/card';
 
 const CLASS_NAME = 'react-ant-abstract-form';
 
 // https://github.com/rekit/antd-form-builder
 // https://rekit.github.io/antd-form-builder/examples-v4/
 
-export default class ReactAntAbstractForm extends Component {
+export interface ReactAntAbstractFormProps {
+  /**
+   * The extended className for component.
+   */
+  className?: string;
+}
+
+interface ReactAntAbstractFormState {
+  meta: any;
+}
+
+export default class ReactAntAbstractForm extends Component<
+  ReactAntAbstractFormProps,
+  ReactAntAbstractFormState
+> {
   static displayName = CLASS_NAME;
   static version = '__VERSION__';
-  static propTypes = {
-    /**
-     * The extended className for component.
-     */
-    className: PropTypes.string
-  };
-
   static defaultProps = {};
 
   resources = 'curds';
-  size = 'small';
+  size: CardSize = 'small';
   options = {};
   actions = {
     reset: true,
     redirect: true
   };
+
+  routeService: any;
+  apiService: any;
+  formRef: any;
 
   constructor(inProps) {
     super(inProps);
@@ -71,8 +82,7 @@ export default class ReactAntAbstractForm extends Component {
     const { reset } = this.actions;
     const { formItemLayout } = this.state.meta;
     return (
-      <Form.Item
-        wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
+      <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
         <div className="mr-10_ mr_">
           <Button htmlType="submit" type="primary">
             保存
@@ -133,8 +143,8 @@ export default class ReactAntAbstractForm extends Component {
     });
   };
 
-  view() {
-    const { className, ...props } = this.props;
+  view(): React.ReactNode {
+    const { className } = this.props;
     const { meta } = this.state;
     return (
       <Card

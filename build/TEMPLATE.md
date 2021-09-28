@@ -11,9 +11,6 @@
 npm install -S @jswork/react-ant-abstract-form
 ```
 
-## properties
-__GENERATE_DOCS__
-
 ## usage
 1. import css
   ```scss
@@ -30,9 +27,8 @@ __GENERATE_DOCS__
 __GENERATE_DAPP__
   ```
 
-## documentation
+## preview
 - https://afeiship.github.io/react-ant-abstract-form/
-
 
 ## license
 Code released under [the MIT license](https://github.com/afeiship/react-ant-abstract-form/blob/master/LICENSE.txt).
