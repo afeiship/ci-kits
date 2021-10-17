@@ -23,10 +23,7 @@ interface ReactAntAbstractFormState {
   meta: any;
 }
 
-export default class ReactAntAbstractForm extends Component<
-  ReactAntAbstractFormProps,
-  ReactAntAbstractFormState
-> {
+export default class ReactAntAbstractForm extends Component<ReactAntAbstractFormProps, ReactAntAbstractFormState> {
   static displayName = CLASS_NAME;
   static version = '__VERSION__';
   static defaultProps = {};
@@ -110,7 +107,9 @@ export default class ReactAntAbstractForm extends Component<
    * @param {*} inData
    * @returns
    */
-  setResponse: nx.stubValue;
+  setResponse(inData) {
+    return inData;
+  }
 
   handleInit() {
     if (this.isEdit) {
