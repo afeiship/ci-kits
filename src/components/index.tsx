@@ -132,7 +132,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
     return new Promise((resolve, reject) => {
       this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
-          message.info('操作成功');
+          message.success('操作成功');
           redirect && this.routeService.back();
           resolve(res);
         })
