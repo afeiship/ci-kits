@@ -33,6 +33,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
   options = {};
   actions = {
     reset: true,
+    back: true,
     redirect: true
   };
 
@@ -76,7 +77,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
   }
 
   get submitView() {
-    const { reset } = this.actions;
+    const { reset, back } = this.actions;
     const { formItemLayout } = this.state.meta;
     return (
       <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
@@ -87,6 +88,11 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
           {reset && (
             <Button htmlType="reset" type="default">
               取消
+            </Button>
+          )}
+          {back && (
+            <Button type="default" onClick={() => this.routeService.back()}>
+              返回
             </Button>
           )}
         </div>
