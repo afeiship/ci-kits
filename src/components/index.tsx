@@ -5,6 +5,7 @@ import FormBuilder from 'antd-form-builder';
 import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
 import ReactAdminIcons from '@jswork/react-admin-icons';
+import { CardSize } from 'antd/es/card';
 
 const CLASS_NAME = 'react-ant-abstract-form';
 
@@ -28,7 +29,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
   static defaultProps = {};
 
   resources = 'curds';
-  size = 'small';
+  size: CardSize = 'small';
   options = {};
   actions = {
     reset: true,
