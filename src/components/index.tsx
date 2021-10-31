@@ -150,6 +150,7 @@ export default class ReactAntAbstractForm extends Component<
     });
   };
 
+  // @ts-ignore
   handleValuesChange(inValues?, inAllValues?) {
     this.forceUpdate();
   }
