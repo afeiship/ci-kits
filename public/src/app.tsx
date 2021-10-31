@@ -77,6 +77,11 @@ class App extends ReactAntAbstractForm {
     this.setState({ meta });
   }
 
+  handleValuesChange(inValues, inAllValues) {
+    super.handleValuesChange(inValues, inAllValues);
+    console.log('handle chagne.', inValues, inAllValues);
+  }
+
   render() {
     return this.view();
   }

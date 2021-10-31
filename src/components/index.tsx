@@ -23,7 +23,10 @@ interface ReactAntAbstractFormState {
   meta: any;
 }
 
-export default class ReactAntAbstractForm extends Component<ReactAntAbstractFormProps, ReactAntAbstractFormState> {
+export default class ReactAntAbstractForm extends Component<
+  ReactAntAbstractFormProps,
+  ReactAntAbstractFormState
+> {
   static displayName = CLASS_NAME;
   static version = '__VERSION__';
   static defaultProps = {};
@@ -43,6 +46,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
 
   constructor(inProps) {
     super(inProps);
+    this.handleValuesChange = this.handleValuesChange.bind(this);
     this.state = {
       meta: {}
     };
@@ -146,6 +150,10 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
     });
   };
 
+  handleValuesChange(inValues?, inAllValues?) {
+    this.forceUpdate();
+  }
+
   view(): ReactNode {
     const { className } = this.props;
     const { meta } = this.state;
@@ -159,7 +167,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
         <Form
           ref={(formRef) => (this.formRef = formRef)}
           onFinish={this.handleFinish}
-          onValuesChange={() => this.forceUpdate()}>
+          onValuesChange={this.handleValuesChange}>
           <FormBuilder meta={meta} form={this.formRef} />
           {this.submitView}
         </Form>
