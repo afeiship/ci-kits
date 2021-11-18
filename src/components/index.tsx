@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { Component, ReactNode } from 'react';
-import { Form, Card, Button, message, FormInstance } from 'antd';
+import { Form, Card, Button, message } from 'antd';
 import FormBuilder from 'antd-form-builder';
 import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
@@ -52,7 +52,7 @@ export default class ReactAntAbstractForm extends Component<
 
   routeService: any;
   apiService: any;
-  formRef: FormInstance;
+  formRef: any;
 
   constructor(inProps) {
     super(inProps);
