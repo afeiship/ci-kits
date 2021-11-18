@@ -70,6 +70,7 @@ class App extends ReactAntAbstractForm {
   }
 
   componentDidMount() {
+    super.componentDidMount();
     const { meta } = this.state;
     meta.initialValues = {
       username: 'afeiship'

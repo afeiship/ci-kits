@@ -10,6 +10,10 @@ import hotkeys from 'hotkeys-js';
 
 const CLASS_NAME = 'react-ant-abstract-form';
 const HOT_KEYS = 'cmd+s';
+
+// By default hotkeys are not enabled for INPUT SELECT TEXTAREA elements
+hotkeys.filter = nx.stubTrue;
+
 const registerKey = (inName, inCallback) => {
   hotkeys(inName, inCallback);
   return {
