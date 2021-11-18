@@ -10,6 +10,10 @@ import hotkeys from 'hotkeys-js';
 
 const CLASS_NAME = 'react-ant-abstract-form';
 const HOT_KEYS = 'cmd+s';
+const MESSAGES = {
+  OPERATION_DONE: '操作成功',
+  ONLY_CREATOR: '请在编辑情况下调用此快捷操作'
+};
 
 // By default hotkeys are not enabled for INPUT SELECT TEXTAREA elements
 hotkeys.filter = nx.stubTrue;
@@ -146,7 +150,7 @@ export default class ReactAntAbstractForm extends Component<
     return new Promise((resolve, reject) => {
       this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
-          message.success('操作成功');
+          message.success(MESSAGES.OPERATION_DONE);
           inRedirect && this.routeService.back();
           resolve(res);
         })
@@ -155,7 +159,7 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   handleHotkey = (inEvent) => {
-    if (!this.isEdit) return message.success('请在编辑情况下调用此快捷操作.'), Promise.resolve();
+    if (!this.isEdit) return message.info(MESSAGES.ONLY_CREATOR), Promise.resolve();
     inEvent.preventDefault();
     return this.save(this.formRef.getFieldsValue(), false);
   };
