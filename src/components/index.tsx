@@ -159,8 +159,8 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   handleHotkey = (inEvent) => {
-    if (!this.isEdit) return message.info(MESSAGES.ONLY_CREATOR), Promise.resolve();
     inEvent.preventDefault();
+    if (!this.isEdit) return message.info(MESSAGES.ONLY_CREATOR), Promise.resolve();
     return this.save(this.formRef.getFieldsValue(), false);
   };
 
