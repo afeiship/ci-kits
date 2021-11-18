@@ -1,13 +1,21 @@
 import classNames from 'classnames';
 import React, { Component, ReactNode } from 'react';
-import { Form, Card, Button, message } from 'antd';
+import { Form, Card, Button, message, FormInstance } from 'antd';
 import FormBuilder from 'antd-form-builder';
 import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
 import ReactAdminIcons from '@jswork/react-admin-icons';
 import { CardSize } from 'antd/es/card';
+import hotkeys from 'hotkeys-js';
 
 const CLASS_NAME = 'react-ant-abstract-form';
+const HOT_KEYS = 'cmd+s';
+const registerKey = (inName, inCallback) => {
+  hotkeys(inName, inCallback);
+  return {
+    destroy: () => hotkeys.unbind(inName, inCallback)
+  };
+};
 
 // https://github.com/rekit/antd-form-builder
 // https://rekit.github.io/antd-form-builder/examples-v4/
@@ -31,6 +39,8 @@ export default class ReactAntAbstractForm extends Component<
   static version = '__VERSION__';
   static defaultProps = {};
 
+  private hotkeysRes;
+
   resources = 'curds';
   size: CardSize = 'small';
   options = {};
@@ -42,11 +52,12 @@ export default class ReactAntAbstractForm extends Component<
 
   routeService: any;
   apiService: any;
-  formRef: any;
+  formRef: FormInstance;
 
   constructor(inProps) {
     super(inProps);
     this.handleValuesChange = this.handleValuesChange.bind(this);
+    this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
     this.state = {
       meta: {}
     };
@@ -112,6 +123,10 @@ export default class ReactAntAbstractForm extends Component<
     }, 0);
   }
 
+  componentWillUnmount() {
+    this.hotkeysRes.destroy();
+  }
+
   /**
    * Template method.
    * @param {*} inData
@@ -120,6 +135,25 @@ export default class ReactAntAbstractForm extends Component<
   setResponse(inData) {
     return inData;
   }
+
+  save(inEvent, inRedirect) {
+    const action = this.isEdit ? 'update' : 'create';
+    const data = nx.mix(null, this.params, inEvent, this.options);
+    return new Promise((resolve, reject) => {
+      this.apiService[`${this.resources}_${action}`](data)
+        .then((res) => {
+          message.success('操作成功');
+          inRedirect && this.routeService.back();
+          resolve(res);
+        })
+        .catch(reject);
+    });
+  }
+
+  handleHotkey = (inEvent) => {
+    inEvent.preventDefault();
+    this.save(this.formRef.getFieldsValue(), false);
+  };
 
   handleInit() {
     if (this.isEdit) {
@@ -136,18 +170,8 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   handleFinish = (inEvent) => {
-    const action = this.isEdit ? 'update' : 'create';
-    const data = nx.mix(null, this.params, inEvent, this.options);
     const { redirect } = this.actions;
-    return new Promise((resolve, reject) => {
-      this.apiService[`${this.resources}_${action}`](data)
-        .then((res) => {
-          message.success('操作成功');
-          redirect && this.routeService.back();
-          resolve(res);
-        })
-        .catch(reject);
-    });
+    return this.save(inEvent, redirect);
   };
 
   // @ts-ignore
