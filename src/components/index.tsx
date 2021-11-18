@@ -155,8 +155,9 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   handleHotkey = (inEvent) => {
+    if (!this.isEdit) return message.success('请在编辑情况下调用此快捷操作.'), Promise.resolve();
     inEvent.preventDefault();
-    this.save(this.formRef.getFieldsValue(), false);
+    return this.save(this.formRef.getFieldsValue(), false);
   };
 
   handleInit() {
