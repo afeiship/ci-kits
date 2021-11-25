@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { Component, ReactNode } from 'react';
-import { Form, Card, Button, message } from 'antd';
+import { Tag, Form, Card, Button, message } from 'antd';
 import FormBuilder from 'antd-form-builder';
 import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
@@ -14,6 +14,10 @@ const MESSAGES = {
   OPERATION_DONE: '操作成功',
   ONLY_CREATOR: '请在编辑情况下调用此快捷操作'
 };
+const EDITABLE_STATUS = [
+  { value: true, color: '#87d068', label: '编辑' },
+  { value: false, color: '#f50', label: '创建' }
+];
 
 // By default hotkeys are not enabled for INPUT SELECT TEXTAREA elements
 hotkeys.filter = nx.stubTrue;
@@ -72,9 +76,11 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get titleView() {
+    const item = EDITABLE_STATUS[+this.isEdit];
     return (
       <span className="mr-5_ mr_">
         <ReactAdminIcons value="form" />
+        <Tag color={item.color}>{item.label}</Tag>
         <span>操作面板</span>
       </span>
     );
