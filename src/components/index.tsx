@@ -184,6 +184,7 @@ export default class ReactAntAbstractForm extends Component<
     return new Promise((resolve, reject) => {
       this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
+          this.initialData = this.fieldsValue;
           message.success(MESSAGES.OPERATION_DONE);
           inRedirect && this.routeService.back();
           resolve(res);
