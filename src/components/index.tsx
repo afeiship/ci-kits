@@ -14,9 +14,9 @@ const MESSAGES = {
   OPERATION_DONE: '操作成功',
   ONLY_CREATOR: '请在编辑情况下调用此快捷操作'
 };
-const EDITABLE_STATUS = [
-  { value: true, color: '#87d068', label: '编辑' },
-  { value: false, color: '#f50', label: '创建' }
+const OPERATION_STATUS = [
+  { value: false, color: '#87d068', label: '编辑' },
+  { value: true, color: '#f50', label: '创建' }
 ];
 
 // By default hotkeys are not enabled for INPUT SELECT TEXTAREA elements
@@ -76,7 +76,7 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get titleView() {
-    const item = EDITABLE_STATUS[+this.isEdit];
+    const item = OPERATION_STATUS[+this.isEdit];
     return (
       <span className="mr-5_ mr_">
         <ReactAdminIcons value="form" />
