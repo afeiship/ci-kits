@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { Component, ReactNode } from 'react';
-import { Tag, Form, Card, Button, message } from 'antd';
+import { Tag, Form, Card, Button, message, Tooltip } from 'antd';
 import FormBuilder from 'antd-form-builder';
 import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
@@ -12,11 +12,12 @@ const CLASS_NAME = 'react-ant-abstract-form';
 const HOT_KEYS = 'cmd+s';
 const MESSAGES = {
   OPERATION_DONE: '操作成功',
-  ONLY_CREATOR: '请在编辑情况下调用此快捷操作'
+  ONLY_CREATOR: '请在编辑情况下调用此快捷操作',
+  CONTENT_NO_CHANGED: '当前内容没有任何修改'
 };
 const OPERATION_STATUS = [
-  { value: false, color: '#87d068', label: '编辑' },
-  { value: true, color: '#f50', label: '创建' }
+  { value: true, color: '#f50', label: '创建', action: 'create' },
+  { value: false, color: '#87d068', label: '编辑', action: 'update' }
 ];
 
 // By default hotkeys are not enabled for INPUT SELECT TEXTAREA elements
@@ -52,6 +53,7 @@ export default class ReactAntAbstractForm extends Component<
   static defaultProps = {};
 
   private hotkeysRes;
+  private initialData;
 
   resources = 'curds';
   size: CardSize = 'small';
@@ -70,9 +72,18 @@ export default class ReactAntAbstractForm extends Component<
     super(inProps);
     this.handleValuesChange = this.handleValuesChange.bind(this);
     this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
+    this.initialData = null;
     this.state = {
       meta: {}
     };
+  }
+
+  get touchedView() {
+    return (
+      <Tooltip title="此处有修改">
+        <em style={{ color: '#f60' }}>{this.isTouched && <ReactAdminIcons value="tree" />}</em>
+      </Tooltip>
+    );
   }
 
   get titleView() {
@@ -81,7 +92,10 @@ export default class ReactAntAbstractForm extends Component<
       <span className="mr-5_ mr_">
         <ReactAdminIcons value="form" />
         <Tag color={item.color}>{item.label}</Tag>
-        <span>操作面板</span>
+        <span>
+          操作面板
+          {this.touchedView}
+        </span>
       </span>
     );
   }
@@ -92,6 +106,15 @@ export default class ReactAntAbstractForm extends Component<
 
   get isEdit() {
     return !nxIsEmptyObject(this.params);
+  }
+
+  get fieldsValue() {
+    return this.formRef.getFieldsValue();
+  }
+
+  get isTouched() {
+    if (!this.formRef || !this.initialData) return false;
+    return JSON.stringify(this.initialData) !== JSON.stringify(this.formRef.getFieldsValue());
   }
 
   get extraView() {
@@ -130,7 +153,10 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   componentDidMount() {
-    this.handleInit();
+    this.handleInit().then((res) => {
+      this.initialData = res;
+      this.forceUpdate();
+    });
     // route service is async
     setTimeout(() => {
       nx.set(this.routeService, 'current', this.props);
@@ -153,6 +179,8 @@ export default class ReactAntAbstractForm extends Component<
   save(inEvent, inRedirect) {
     const action = this.isEdit ? 'update' : 'create';
     const data = nx.mix(null, this.params, inEvent, this.options);
+    if (!this.isTouched) return message.info(MESSAGES.CONTENT_NO_CHANGED);
+
     return new Promise((resolve, reject) => {
       this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
@@ -174,14 +202,17 @@ export default class ReactAntAbstractForm extends Component<
     if (this.isEdit) {
       const data = nx.mix(null, this.params, this.options);
       const { meta } = this.state;
-      this.apiService[`${this.resources}_show`](data).then((res) => {
-        const response = this.setResponse(res);
-        nx.mix(meta.initialValues, response);
-        this.setState({ meta });
-        this.formRef.setFieldsValue(response);
+      return new Promise((resolve) => {
+        this.apiService[`${this.resources}_show`](data).then((res) => {
+          const response = this.setResponse(res);
+          nx.mix(meta.initialValues, response);
+          this.setState({ meta });
+          this.formRef.setFieldsValue(response);
+          resolve(this.fieldsValue);
+        });
       });
     }
-    return Promise.resolve();
+    return Promise.resolve(this.formRef.getFieldsValue());
   }
 
   handleFinish = (inEvent) => {
