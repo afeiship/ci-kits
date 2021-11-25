@@ -42,6 +42,7 @@ export interface ReactAntAbstractFormProps {
 
 interface ReactAntAbstractFormState {
   meta: any;
+  previousState?: any;
 }
 
 export default class ReactAntAbstractForm extends Component<
@@ -53,7 +54,6 @@ export default class ReactAntAbstractForm extends Component<
   static defaultProps = {};
 
   private hotkeysRes;
-  private initialData;
 
   resources = 'curds';
   size: CardSize = 'small';
@@ -72,9 +72,17 @@ export default class ReactAntAbstractForm extends Component<
     super(inProps);
     this.handleValuesChange = this.handleValuesChange.bind(this);
     this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
-    this.initialData = null;
     this.state = {
-      meta: {}
+      meta: {},
+      previousState: null
+    };
+    this.mergeState();
+  }
+
+  mergeState(inState?) {
+    return {
+      ...this.state,
+      ...inState
     };
   }
 
@@ -113,8 +121,9 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get isTouched() {
-    if (!this.formRef || !this.initialData) return false;
-    return JSON.stringify(this.initialData) !== JSON.stringify(this.formRef.getFieldsValue());
+    const { previousState } = this.state;
+    if (!this.formRef || !previousState) return false;
+    return JSON.stringify(previousState) !== JSON.stringify(this.fieldsValue);
   }
 
   get extraView() {
@@ -154,8 +163,7 @@ export default class ReactAntAbstractForm extends Component<
 
   componentDidMount() {
     this.handleInit().then((res) => {
-      this.initialData = res;
-      this.forceUpdate();
+      this.setState({ previousState: res });
     });
     // route service is async
     setTimeout(() => {
@@ -184,7 +192,7 @@ export default class ReactAntAbstractForm extends Component<
     return new Promise((resolve, reject) => {
       this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
-          this.initialData = this.fieldsValue;
+          this.setState({ previousState: this.fieldsValue });
           message.success(MESSAGES.OPERATION_DONE);
           inRedirect && this.routeService.back();
           resolve(res);
