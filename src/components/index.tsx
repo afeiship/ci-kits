@@ -4,6 +4,7 @@ import { Tag, Form, Card, Button, message, Tooltip } from 'antd';
 import FormBuilder from 'antd-form-builder';
 import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
+import NxDomEvent from '@jswork/next-dom-event';
 import ReactAdminIcons from '@jswork/react-admin-icons';
 import { CardSize } from 'antd/es/card';
 import hotkeys from 'hotkeys-js';
@@ -54,6 +55,7 @@ export default class ReactAntAbstractForm extends Component<
   static defaultProps = {};
 
   private hotkeysRes;
+  private winkeyRes;
 
   resources = 'curds';
   size: CardSize = 'small';
@@ -162,9 +164,8 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   componentDidMount() {
-    this.handleInit().then((res) => {
-      this.setState({ previousState: res });
-    });
+    this.winkeyRes = NxDomEvent.on(window, 'keyup', this.handleWinKeyup);
+    this.handleInit().then((res) => this.setState({ previousState: res }));
     // route service is async
     setTimeout(() => {
       nx.set(this.routeService, 'current', this.props);
@@ -173,6 +174,7 @@ export default class ReactAntAbstractForm extends Component<
 
   componentWillUnmount() {
     this.hotkeysRes.destroy();
+    this.winkeyRes.destroy();
   }
 
   /**
@@ -200,6 +202,15 @@ export default class ReactAntAbstractForm extends Component<
         .catch(reject);
     });
   }
+
+  handleWinKeyup = () => {
+    const hasMarked = document.title.includes('*');
+    if (this.isTouched) {
+      !hasMarked && (document.title = document.title + '*');
+    } else {
+      hasMarked && (document.title = document.title.slice(0, -1));
+    }
+  };
 
   handleHotkey = (inEvent) => {
     inEvent.preventDefault();
