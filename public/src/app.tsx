@@ -1,11 +1,15 @@
+// @ts-ignore
 import React from 'react';
 import ReactAntAbstractForm from '../../src/main';
 import styled from 'styled-components';
 import nx from '@jswork/next';
+import ReactUploadMedia from '@jswork/react-upload-media';
+import './style.scss';
 
 const Container = styled.div`
   width: 80%;
   margin: 30px auto 0;
+
   .is-body {
     padding: 20px;
     background: #fff;
@@ -29,19 +33,19 @@ const Container = styled.div`
 
 // Mock api
 nx.$api = {
-  curds_index: function () {
+  curds_index: function() {
     return Promise.resolve('index');
   },
-  curds_show: function () {
+  curds_show: function() {
     return Promise.resolve('show');
   },
-  curds_update: function () {
+  curds_update: function() {
     return Promise.resolve('update');
   }
 };
 
 nx.$route = {
-  back: function () {
+  back: function() {
     console.log('back');
   }
 };
@@ -55,7 +59,9 @@ class App extends ReactAntAbstractForm {
     this.state = {
       meta: {
         formItemLayout: [6, 18],
-        initialValues: {},
+        initialValues: {
+          media: []
+        },
         fields: [
           {
             key: 'username',
@@ -63,14 +69,26 @@ class App extends ReactAntAbstractForm {
             tooltip: '用户名',
             rules: [{ max: 10, min: 5 }]
           },
-          { key: 'password', label: 'Password', widget: 'password' }
+          { key: 'password', label: 'Password', widget: 'password' },
+          {
+            key: 'media', label: 'Media', widget: ReactUploadMedia, widgetProps: {
+              onUpload: (e) => {
+                return new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    resolve({
+                      default: 'https://www.baidu.com/img/bd_logo1.png'
+                    });
+                  }, 1000);
+                });
+              }
+            }
+          }
         ]
       }
     };
   }
 
   componentDidMount() {
-    super.componentDidMount();
     const { meta } = this.state;
     meta.initialValues = {
       username: 'afeiship'
@@ -80,7 +98,6 @@ class App extends ReactAntAbstractForm {
 
   handleValuesChange(inValues, inAllValues) {
     super.handleValuesChange(inValues, inAllValues);
-    console.log('handle chagne.', inValues, inAllValues);
   }
 
   render() {
