@@ -153,11 +153,7 @@ export default class ReactAntAbstractForm extends Component<
               取消
             </Button>
           )}
-          {back && (
-            <Button onClick={() => this.routeService.back()}>
-              返回
-            </Button>
-          )}
+          {back && <Button onClick={() => this.routeService.back()}>返回</Button>}
         </div>
       </Form.Item>
     );
