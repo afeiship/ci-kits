@@ -6,7 +6,7 @@ import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
 import NxDomEvent from '@jswork/next-dom-event';
 import ReactAdminIcons from '@jswork/react-admin-icons';
-import { CardSize } from 'antd/es/card';
+import { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js';
 
 const CLASS_NAME = 'react-ant-abstract-form';
@@ -46,8 +46,10 @@ interface ReactAntAbstractFormState {
   previousState?: any;
 }
 
-export default class ReactAntAbstractForm extends Component<ReactAntAbstractFormProps,
-  ReactAntAbstractFormState> {
+export default class ReactAntAbstractForm extends Component<
+  ReactAntAbstractFormProps,
+  ReactAntAbstractFormState
+> {
   static displayName = CLASS_NAME;
   static version = '__VERSION__';
   static defaultProps = {};
@@ -88,8 +90,8 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
 
   get touchedView() {
     return (
-      <Tooltip title='此处有修改'>
-        <em style={{ color: '#f60' }}>{this.isTouched && <ReactAdminIcons value='tree' />}</em>
+      <Tooltip title="此处有修改">
+        <em style={{ color: '#f60' }}>{this.isTouched && <ReactAdminIcons value="tree" />}</em>
       </Tooltip>
     );
   }
@@ -97,8 +99,8 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
   get titleView() {
     const item = OPERATION_STATUS[+this.isEdit];
     return (
-      <span className='mr-5_ mr_'>
-        <ReactAdminIcons value='form' />
+      <span className="mr-5_ mr_">
+        <ReactAdminIcons value="form" />
         <Tag color={item.color}>{item.label}</Tag>
         <span>
           操作面板
@@ -128,9 +130,9 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
 
   get extraView() {
     return (
-      <div className='is-extra'>
+      <div className="is-extra">
         <Button size={'small'} onClick={() => this.routeService.back()}>
-          <ReactAdminIcons size={12} value='return' />
+          <ReactAdminIcons size={12} value="return" />
           返回
         </Button>
       </div>
@@ -142,17 +144,17 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
     const { formItemLayout } = this.state.meta;
     return (
       <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
-        <div className='mr-10_ mr_'>
-          <Button htmlType='submit' type='primary'>
+        <div className="mr-10_ mr_">
+          <Button htmlType="submit" type="primary">
             保存
           </Button>
           {reset && (
-            <Button htmlType='reset' type='default'>
+            <Button htmlType="reset" type="default">
               取消
             </Button>
           )}
           {back && (
-            <Button type='default' onClick={() => this.routeService.back()}>
+            <Button onClick={() => this.routeService.back()}>
               返回
             </Button>
           )}
