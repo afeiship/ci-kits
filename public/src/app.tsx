@@ -72,8 +72,8 @@ class App extends ReactAntAbstractForm {
           { key: 'password', label: 'Password', widget: 'password' },
           {
             key: 'media', label: 'Media', widget: ReactUploadMedia, widgetProps: {
-              onUpload: (e) => {
-                return new Promise((resolve, reject) => {
+              onUpload: () => {
+                return new Promise((resolve) => {
                   setTimeout(() => {
                     resolve({
                       default: 'https://www.baidu.com/img/bd_logo1.png'
@@ -89,15 +89,12 @@ class App extends ReactAntAbstractForm {
   }
 
   componentDidMount() {
+    super.componentDidMount();
     const { meta } = this.state;
     meta.initialValues = {
       username: 'afeiship'
     };
     this.setState({ meta });
-  }
-
-  handleValuesChange(inValues, inAllValues) {
-    super.handleValuesChange(inValues, inAllValues);
   }
 
   render() {

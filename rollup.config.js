@@ -51,8 +51,7 @@ export default [
       terser({ output: { comments: false } }),
       banner(nx.rollupBanner()),
       typescript({
-        rollupCommonJSResolveHack: true,
-        exclude: ['**/__tests__/**', '**/__stories__/**'],
+        tsconfig: 'tsconfig.build.json',
         clean: true
       }),
       commonjs({

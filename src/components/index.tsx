@@ -1,13 +1,19 @@
-import classNames from 'classnames';
-import React, { Component, ReactNode } from 'react';
-import { Tag, Form, Card, Button, message, Tooltip } from 'antd';
-import FormBuilder from 'antd-form-builder';
+import cx from 'classnames';
+import React, { Component } from 'react';
+import { Tag, Form, Card, Button, message, Tooltip, Space } from 'antd';
+import AntdFormBuilder from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
 import NxDomEvent from '@jswork/next-dom-event';
-import ReactAdminIcons from '@jswork/react-admin-icons';
 import { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js';
+import {
+  ArrowLeftOutlined,
+  FormOutlined,
+  SaveOutlined,
+  ReloadOutlined,
+  DiffOutlined
+} from '@ant-design/icons';
 
 const CLASS_NAME = 'react-ant-abstract-form';
 const HOT_KEYS = 'cmd+s';
@@ -61,9 +67,9 @@ export default class ReactAntAbstractForm extends Component<
   size: CardSize = 'small';
   options = {};
   actions = {
-    reset: true,
-    back: true,
-    redirect: true
+    resetAble: true,
+    backAble: true,
+    redirectAble: true
   };
 
   routeService: any;
@@ -72,7 +78,6 @@ export default class ReactAntAbstractForm extends Component<
 
   constructor(inProps) {
     super(inProps);
-    this.handleValuesChange = this.handleValuesChange.bind(this);
     this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
     this.state = {
       meta: {},
@@ -91,7 +96,7 @@ export default class ReactAntAbstractForm extends Component<
   get touchedView() {
     return (
       <Tooltip title="此处有修改">
-        <em style={{ color: '#f60' }}>{this.isTouched && <ReactAdminIcons value="tree" />}</em>
+        <em style={{ color: '#f60' }}>{this.isTouched && <DiffOutlined />}</em>
       </Tooltip>
     );
   }
@@ -99,14 +104,16 @@ export default class ReactAntAbstractForm extends Component<
   get titleView() {
     const item = OPERATION_STATUS[+this.isEdit];
     return (
-      <span className="mr-5_ mr_">
-        <ReactAdminIcons value="form" />
-        <Tag color={item.color}>{item.label}</Tag>
-        <span>
-          操作面板
+      <Space>
+        <FormOutlined />
+        <Tag style={{ margin: 0 }} color={item.color}>
+          {item.label}
+        </Tag>
+        <Space>
+          <span>操作面板</span>
           {this.touchedView}
-        </span>
-      </span>
+        </Space>
+      </Space>
     );
   }
 
@@ -132,7 +139,7 @@ export default class ReactAntAbstractForm extends Component<
     return (
       <div className="is-extra">
         <Button size={'small'} onClick={() => this.routeService.back()}>
-          <ReactAdminIcons size={12} value="return" />
+          <ArrowLeftOutlined />
           返回
         </Button>
       </div>
@@ -140,20 +147,24 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get submitView() {
-    const { reset, back } = this.actions;
+    const { resetAble, backAble } = this.actions;
     const { formItemLayout } = this.state.meta;
     return (
       <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
         <div className="mr-10_ mr_">
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit" type="primary" icon={<SaveOutlined />}>
             保存
           </Button>
-          {reset && (
-            <Button htmlType="reset" type="default">
+          {resetAble && (
+            <Button icon={<ReloadOutlined />} htmlType="reset" type="default">
               取消
             </Button>
           )}
-          {back && <Button onClick={() => this.routeService.back()}>返回</Button>}
+          {backAble && (
+            <Button icon={<ArrowLeftOutlined />} onClick={() => this.routeService.back()}>
+              返回
+            </Button>
+          )}
         </div>
       </Form.Item>
     );
@@ -161,7 +172,7 @@ export default class ReactAntAbstractForm extends Component<
 
   componentDidMount() {
     this.winkeyRes = NxDomEvent.on(window, 'keyup', this.handleWinKeyup);
-    this.handleInit().then((res) => this.setState({ previousState: res }));
+    this.handleResponse().then((res) => this.setState({ previousState: res }));
     // route service is async
     setTimeout(() => {
       nx.set(this.routeService, 'current', this.props);
@@ -169,8 +180,10 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   componentWillUnmount() {
+    const hasMarked = document.title.includes('*');
     this.hotkeysRes.destroy();
     this.winkeyRes.destroy();
+    if (hasMarked) document.title = document.title.slice(0, -1);
   }
 
   /**
@@ -178,7 +191,7 @@ export default class ReactAntAbstractForm extends Component<
    * @param {*} inData
    * @returns
    */
-  setResponse(inData) {
+  transformResponse(inData) {
     return inData;
   }
 
@@ -191,7 +204,7 @@ export default class ReactAntAbstractForm extends Component<
       this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
           this.setState({ previousState: this.fieldsValue });
-          message.success(MESSAGES.OPERATION_DONE);
+          void message.success(MESSAGES.OPERATION_DONE);
           inRedirect && this.routeService.back();
           resolve(res);
         })
@@ -211,16 +224,16 @@ export default class ReactAntAbstractForm extends Component<
   handleHotkey = (inEvent) => {
     inEvent.preventDefault();
     if (!this.isEdit) return message.info(MESSAGES.ONLY_CREATOR), Promise.resolve();
-    return this.save(this.formRef.getFieldsValue(), false);
+    return this.save(this.fieldsValue, false);
   };
 
-  handleInit() {
+  handleResponse() {
     if (this.isEdit) {
       const data = nx.mix(null, this.params, this.options);
       const { meta } = this.state;
       return new Promise((resolve) => {
         this.apiService[`${this.resources}_show`](data).then((res) => {
-          const response = this.setResponse(res);
+          const response = this.transformResponse(res);
           nx.mix(meta.initialValues, response);
           this.setState({ meta });
           this.formRef.setFieldsValue(response);
@@ -228,20 +241,25 @@ export default class ReactAntAbstractForm extends Component<
         });
       });
     }
-    return Promise.resolve(this.formRef.getFieldsValue());
+    return Promise.resolve(this.fieldsValue);
   }
 
   handleFinish = (inEvent) => {
-    const { redirect } = this.actions;
-    return this.save(inEvent, redirect);
+    const { value } = inEvent.target;
+    const { redirectAble } = this.actions;
+    return this.save(value, redirectAble);
   };
 
-  // @ts-ignore
-  handleValuesChange(inValues?, inAllValues?) {
-    this.forceUpdate();
-  }
+  handleInit = (inEvent) => {
+    const { value } = inEvent.target;
+    this.formRef = value;
+  };
 
-  view(): ReactNode {
+  handleChange = () => {
+    this.forceUpdate();
+  };
+
+  view() {
     const { className } = this.props;
     const { meta } = this.state;
     return (
@@ -250,19 +268,19 @@ export default class ReactAntAbstractForm extends Component<
         title={this.titleView}
         extra={this.extraView}
         data-component={CLASS_NAME}
-        className={classNames(CLASS_NAME, className)}>
-        <Form
-          ref={(formRef) => (this.formRef = formRef)}
-          onFinish={this.handleFinish}
-          onValuesChange={this.handleValuesChange}>
-          <FormBuilder meta={meta} form={this.formRef} />
+        className={cx(CLASS_NAME, className)}>
+        <AntdFormBuilder
+          meta={meta}
+          onInit={this.handleInit}
+          onChange={this.handleChange}
+          onFinish={this.handleFinish}>
           {this.submitView}
-        </Form>
+        </AntdFormBuilder>
       </Card>
     );
   }
 
-  render(): ReactNode {
+  render(): React.ReactNode {
     return null;
   }
 }
