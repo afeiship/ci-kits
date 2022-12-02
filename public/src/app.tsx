@@ -17,18 +17,6 @@ const Container = styled.div`
     min-width: 320px;
     margin: 0 auto;
   }
-
-  .mr-5_ {
-    > * {
-      margin-right: 5px;
-    }
-  }
-
-  .mr-10_ {
-    > * {
-      margin-right: 10px;
-    }
-  }
 `;
 
 // Mock api
@@ -58,6 +46,7 @@ class App extends ReactAntAbstractForm {
     super(props);
     this.state = {
       meta: {
+        gutter: 100,
         formItemLayout: [6, 18],
         initialValues: {
           media: []

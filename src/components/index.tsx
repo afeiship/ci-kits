@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, { Component } from 'react';
 import { Tag, Form, Card, Button, message, Tooltip, Space } from 'antd';
-import AntdFormBuilder from '@jswork/antd-form-builder';
+import AntdFormBuilder, { AntdFormBuilderProps } from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
 import nxIsEmptyObject from '@jswork/next-is-empty-object';
 import NxDomEvent from '@jswork/next-dom-event';
@@ -40,12 +40,7 @@ const registerKey = (inName, inCallback) => {
 // https://github.com/rekit/antd-form-builder
 // https://rekit.github.io/antd-form-builder/examples-v4/
 
-export interface ReactAntAbstractFormProps {
-  /**
-   * The extended className for component.
-   */
-  className?: string;
-}
+export interface ReactAntAbstractFormProps extends Omit<AntdFormBuilderProps, 'meta'> {}
 
 interface ReactAntAbstractFormState {
   meta: any;
@@ -137,12 +132,10 @@ export default class ReactAntAbstractForm extends Component<
 
   get extraView() {
     return (
-      <div className="is-extra">
-        <Button size={'small'} onClick={() => this.routeService.back()}>
-          <ArrowLeftOutlined />
-          返回
-        </Button>
-      </div>
+      <Button size={'small'} onClick={() => this.routeService.back()}>
+        <ArrowLeftOutlined />
+        返回
+      </Button>
     );
   }
 
@@ -151,7 +144,7 @@ export default class ReactAntAbstractForm extends Component<
     const { formItemLayout } = this.state.meta;
     return (
       <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
-        <div className="mr-10_ mr_">
+        <Space>
           <Button htmlType="submit" type="primary" icon={<SaveOutlined />}>
             保存
           </Button>
@@ -165,7 +158,7 @@ export default class ReactAntAbstractForm extends Component<
               返回
             </Button>
           )}
-        </div>
+        </Space>
       </Form.Item>
     );
   }
@@ -260,20 +253,20 @@ export default class ReactAntAbstractForm extends Component<
   };
 
   view() {
-    const { className } = this.props;
+    const { className, ...props } = this.props;
     const { meta } = this.state;
     return (
       <Card
         size={this.size}
         title={this.titleView}
         extra={this.extraView}
-        data-component={CLASS_NAME}
         className={cx(CLASS_NAME, className)}>
         <AntdFormBuilder
           meta={meta}
           onInit={this.handleInit}
           onChange={this.handleChange}
-          onFinish={this.handleFinish}>
+          onFinish={this.handleFinish}
+          {...props}>
           {this.submitView}
         </AntdFormBuilder>
       </Card>
