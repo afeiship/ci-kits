@@ -149,7 +149,7 @@ export default class ReactAntAbstractForm extends Component<
             保存
           </Button>
           {resetAble && (
-            <Button icon={<ReloadOutlined />} htmlType="reset" type="default">
+            <Button icon={<ReloadOutlined />} htmlType="reset">
               取消
             </Button>
           )}
