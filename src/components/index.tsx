@@ -113,7 +113,7 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get params() {
-    return nx.get(this.props, 'match.params');
+    return nx.get(this.props, 'match.params', nx.get(this.props, 'params'));
   }
 
   get isEdit() {
