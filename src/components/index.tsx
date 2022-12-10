@@ -40,7 +40,11 @@ const registerKey = (inName, inCallback) => {
 // https://github.com/rekit/antd-form-builder
 // https://rekit.github.io/antd-form-builder/examples-v4/
 
-export interface ReactAntAbstractFormProps extends Omit<AntdFormBuilderProps, 'meta'> {}
+export interface ReactAntAbstractFormProps extends Omit<AntdFormBuilderProps, 'meta'> {
+  location?: any;
+  navigate?: any;
+  params?: any;
+}
 
 interface ReactAntAbstractFormState {
   meta: any;
@@ -252,7 +256,7 @@ export default class ReactAntAbstractForm extends Component<
   };
 
   view() {
-    const { className, ...props } = this.props;
+    const { className, navigate, location, params, ...props } = this.props;
     const { meta } = this.state;
     return (
       <Card
