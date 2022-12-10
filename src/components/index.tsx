@@ -67,7 +67,6 @@ export default class ReactAntAbstractForm extends Component<
     redirectAble: true
   };
 
-  routeService: any;
   apiService: any;
   formRef: any;
 
@@ -132,7 +131,7 @@ export default class ReactAntAbstractForm extends Component<
 
   get extraView() {
     return (
-      <Button size={'small'} onClick={() => this.routeService.back()}>
+      <Button size={'small'} onClick={() => history.back()}>
         <ArrowLeftOutlined />
         返回
       </Button>
@@ -154,7 +153,7 @@ export default class ReactAntAbstractForm extends Component<
             </Button>
           )}
           {backAble && (
-            <Button icon={<ArrowLeftOutlined />} onClick={() => this.routeService.back()}>
+            <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()}>
               返回
             </Button>
           )}
@@ -168,7 +167,7 @@ export default class ReactAntAbstractForm extends Component<
     this.handleResponse().then((res) => this.setState({ previousState: res }));
     // route service is async
     setTimeout(() => {
-      nx.set(this.routeService, 'current', this.props);
+      nx.set(history, 'current', this.props);
     }, 0);
   }
 
@@ -198,7 +197,7 @@ export default class ReactAntAbstractForm extends Component<
         .then((res) => {
           this.setState({ previousState: this.fieldsValue });
           void message.success(MESSAGES.OPERATION_DONE);
-          inRedirect && this.routeService.back();
+          inRedirect && history.back();
           resolve(res);
         })
         .catch(reject);

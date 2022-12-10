@@ -21,26 +21,19 @@ const Container = styled.div`
 
 // Mock api
 nx.$api = {
-  curds_index: function() {
+  curds_index: function () {
     return Promise.resolve('index');
   },
-  curds_show: function() {
+  curds_show: function () {
     return Promise.resolve('show');
   },
-  curds_update: function() {
+  curds_update: function () {
     return Promise.resolve('update');
-  }
-};
-
-nx.$route = {
-  back: function() {
-    console.log('back');
   }
 };
 
 class App extends ReactAntAbstractForm {
   apiService = nx.$api;
-  routeService = nx.$route;
 
   constructor(props) {
     super(props);
@@ -60,7 +53,10 @@ class App extends ReactAntAbstractForm {
           },
           { key: 'password', label: 'Password', widget: 'password' },
           {
-            key: 'media', label: 'Media', widget: ReactUploadMedia, widgetProps: {
+            key: 'media',
+            label: 'Media',
+            widget: ReactUploadMedia,
+            widgetProps: {
               onUpload: () => {
                 return new Promise((resolve) => {
                   setTimeout(() => {
