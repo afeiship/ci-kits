@@ -166,7 +166,7 @@ export default class ReactAntAbstractForm extends Component<
    * @template
    *
    */
-  initialState() {
+  initialState(): any {
     return null;
   }
 
