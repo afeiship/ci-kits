@@ -1290,15 +1290,20 @@
   resolved "https://registry.yarnpkg.com/@jswork/next-array-replace/-/next-array-replace-1.0.0.tgz#f06991681fb2a42190b9ce6f428d13bee6f2390f"
   integrity sha512-PUaWL9HQjldWOo5M3zBszDV9RVxqG+laSwlpZfdQJLDfhg/hfcQ7uKX4QtzlbvVz+yeSPahXj4aI8HILCXJ4dA==
 
-"@jswork/next-dom-event@^1.0.1":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@jswork/next-dom-event/-/next-dom-event-1.0.2.tgz#f16c7362080e80b1e3707be801f0814e3a9381fd"
-  integrity sha512-Plcda0ND2jfQs78XQbv1Jkbec1T6aBtz4qiQNTgbViF72UYES3P7WfjCqrCXXBHOnclaRvHJZ/nT/o7CLH2i3Q==
+"@jswork/next-dom-event@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.npmmirror.com/@jswork/next-dom-event/-/next-dom-event-1.0.4.tgz#3817d07e7fc42b122bff09b2f58fb98b10abc772"
+  integrity sha512-o6B7YDIRPxAvAiOxu76Zgkyg2BcH90uwc4JVKGE/UvZZgo9fFIPVmEyeufLHgHoyaS46VyGAL2rtYzUu5i8Ldg==
 
-"@jswork/next-is-empty-object@^1.0.1":
+"@jswork/next-get2get@^1.0.1":
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@jswork/next-is-empty-object/-/next-is-empty-object-1.0.1.tgz#5d728ac0f4d60efadc37cfc14ac1f12f847d80ed"
-  integrity sha512-aEYdZXHANFknzDfNnibglU4oWJPeoxsmGvsCTwk7vBupslF/yQ/t9lF2+jsFuomDmRMBeGxQEcF6rOhJSrQ1Pw==
+  resolved "https://registry.npmmirror.com/@jswork/next-get2get/-/next-get2get-1.0.1.tgz#abfd66e934f673eaab7ce5f4fbe3060bba5da934"
+  integrity sha512-dI1ANcHfuzbmp/5bpKPadI7TKLHdgnuqtptTb7maQr8GFgIFrIUbgq+gY8G+Xhoms97G4/q+GUM15DsDNUzB3w==
+
+"@jswork/next-is-empty-object@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmmirror.com/@jswork/next-is-empty-object/-/next-is-empty-object-1.0.2.tgz#45d6d03338b192d59cdd7a9862752184dd9e08b3"
+  integrity sha512-g2fVvprGKWBmJFpokCyJavBBQp04EvPY0mzYVimt6aML5Y3n/X0gi3KUkHYCNNuTrojEfUpPYENucNQoY9VIDg==
 
 "@jswork/next-nice-comments@^1.0.4":
   version "1.0.4"

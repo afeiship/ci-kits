@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import { Tag, Form, Card, Button, message, Tooltip, Space } from 'antd';
 import AntdFormBuilder, { AntdFormBuilderProps } from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
-import nxIsEmptyObject from '@jswork/next-is-empty-object';
-import NxDomEvent from '@jswork/next-dom-event';
-import { CardSize } from 'antd/lib/card/Card';
+import type { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js';
 import {
   ArrowLeftOutlined,
@@ -14,6 +12,10 @@ import {
   ReloadOutlined,
   DiffOutlined
 } from '@ant-design/icons';
+
+import '@jswork/next-dom-event';
+import '@jswork/next-is-empty-object';
+import '@jswork/next-get2get';
 
 const CLASS_NAME = 'react-ant-abstract-form';
 const HOT_KEYS = 'cmd+s';
@@ -116,11 +118,11 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get params() {
-    return nx.get(this.props, 'match.params', nx.get(this.props, 'params'));
+    return nx.get2get(this.props, ['match.params', 'params']);
   }
 
   get isEdit() {
-    return !nxIsEmptyObject(this.params);
+    return !nx.isEmptyObject(this.params);
   }
 
   get fieldsValue() {
@@ -148,7 +150,11 @@ export default class ReactAntAbstractForm extends Component<
     return (
       <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
         <Space>
-          <Button htmlType="submit" type="primary" icon={<SaveOutlined />}>
+          <Button
+            disabled={!this.isTouched}
+            htmlType="submit"
+            type="primary"
+            icon={<SaveOutlined />}>
             保存
           </Button>
           {resetAble && (
@@ -167,7 +173,7 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   componentDidMount() {
-    this.winkeyRes = NxDomEvent.on(window, 'keyup', this.handleWinKeyup);
+    this.winkeyRes = nx.DomEvent.on(window, 'keyup', this.handleWinKeyup);
     this.handleResponse().then((res) => this.setState({ previousState: res }));
     // route service is async
     setTimeout(() => {
