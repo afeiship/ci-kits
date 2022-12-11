@@ -79,18 +79,8 @@ export default class ReactAntAbstractForm extends Component<
   constructor(inProps) {
     super(inProps);
     this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
-    this.state = {
-      meta: {},
-      previousState: null
-    };
-    this.mergeState();
-  }
-
-  mergeState(inState?) {
-    return {
-      ...this.state,
-      ...inState
-    };
+    this.state = nx.mix(null, { meta: {}, previousState: null }, this.initialState());
+    this.init();
   }
 
   get touchedView() {
@@ -171,6 +161,20 @@ export default class ReactAntAbstractForm extends Component<
       </Form.Item>
     );
   }
+
+  /**
+   * @template
+   *
+   */
+  initialState() {
+    return null;
+  }
+
+  /**
+   * @template
+   * Set init after constructor.
+   */
+  init() {}
 
   componentDidMount() {
     this.winkeyRes = nx.DomEvent.on(window, 'keyup', this.handleWinKeyup);
