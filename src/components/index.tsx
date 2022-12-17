@@ -1,7 +1,6 @@
-import cx from 'classnames';
 import React, { Component } from 'react';
 import { Tag, Form, Card, Button, message, Tooltip, Space } from 'antd';
-import AntdFormBuilder, { AntdFormBuilderProps } from '@jswork/antd-form-builder';
+import AntdFormBuilder from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
 import type { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js';
@@ -42,7 +41,7 @@ const registerKey = (inName, inCallback) => {
 // https://github.com/rekit/antd-form-builder
 // https://rekit.github.io/antd-form-builder/examples-v4/
 
-export interface ReactAntAbstractFormProps extends Omit<AntdFormBuilderProps, 'meta'> {
+export interface ReactAntAbstractFormProps {
   location?: any;
   navigate?: any;
   params?: any;
@@ -274,14 +273,10 @@ export default class ReactAntAbstractForm extends Component<
   };
 
   view() {
-    const { className, navigate, location, params, ...props } = this.props;
+    const { navigate, location, params, ...props } = this.props;
     const { meta } = this.state;
     return (
-      <Card
-        size={this.size}
-        title={this.titleView}
-        extra={this.extraView}
-        className={cx(CLASS_NAME, className)}>
+      <Card size={this.size} title={this.titleView} extra={this.extraView}>
         <AntdFormBuilder
           meta={meta}
           onInit={this.handleInit}
