@@ -75,7 +75,6 @@ export default class ReactAntAbstractForm extends Component<
 
   apiService: any;
   formRef: any;
-  formProps: any;
 
   constructor(inProps) {
     super(inProps);
@@ -176,6 +175,14 @@ export default class ReactAntAbstractForm extends Component<
    * Set init after constructor.
    */
   init() {}
+
+  /**
+   * @template
+   * Get form props.
+   */
+  getFormProps() {
+    return {};
+  }
 
   componentDidMount() {
     this.winkeyRes = nx.DomEvent.on(window, 'keyup', this.handleWinKeyup);
@@ -280,7 +287,7 @@ export default class ReactAntAbstractForm extends Component<
           onInit={this.handleInit}
           onChange={this.handleChange}
           onFinish={this.handleFinish}
-          {...this.formProps}
+          {...this.getFormProps()}
           {...props}>
           {this.submitView}
         </AntdFormBuilder>
