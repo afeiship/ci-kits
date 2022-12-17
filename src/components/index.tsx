@@ -180,7 +180,7 @@ export default class ReactAntAbstractForm extends Component<
    * @template
    * Get form props.
    */
-  getFormProps() {
+  getFormProps(): any {
     return {};
   }
 
