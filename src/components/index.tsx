@@ -75,6 +75,7 @@ export default class ReactAntAbstractForm extends Component<
 
   apiService: any;
   formRef: any;
+  formProps: any;
 
   constructor(inProps) {
     super(inProps);
@@ -279,6 +280,7 @@ export default class ReactAntAbstractForm extends Component<
           onInit={this.handleInit}
           onChange={this.handleChange}
           onFinish={this.handleFinish}
+          {...this.formProps}
           {...props}>
           {this.submitView}
         </AntdFormBuilder>
