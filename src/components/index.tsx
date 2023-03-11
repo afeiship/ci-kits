@@ -45,6 +45,7 @@ export interface ReactAntAbstractFormProps {
   location?: any;
   navigate?: any;
   params?: any;
+  debug?: boolean;
 }
 
 interface ReactAntAbstractFormState {
@@ -58,7 +59,9 @@ export default class ReactAntAbstractForm extends Component<
 > {
   static displayName = CLASS_NAME;
   static version = '__VERSION__';
-  static defaultProps = {};
+  static defaultProps = {
+    debug: false
+  };
 
   private hotkeysRes;
   private winkeyRes;
@@ -244,12 +247,14 @@ export default class ReactAntAbstractForm extends Component<
     if (this.isEdit) {
       const data = nx.mix(null, this.params, this.options);
       const { meta } = this.state;
+      const { debug } = this.props;
       return new Promise((resolve) => {
         this.apiService[`${this.resources}_show`](data).then((res) => {
           const response = this.transformResponse(res);
-          nx.mix(meta.initialValues, response);
+          const resValue = debug ? { value: response } : response;
+          nx.mix(meta.initialValues, resValue);
           this.setState({ meta });
-          this.formRef.setFieldsValue(response);
+          this.formRef.setFieldsValue(resValue);
           resolve(this.fieldsValue);
         });
       });
@@ -273,7 +278,7 @@ export default class ReactAntAbstractForm extends Component<
   };
 
   view() {
-    const { navigate, location, params, ...props } = this.props;
+    const { navigate, location, params, debug, ...props } = this.props;
     const { meta } = this.state;
     return (
       <Card size={this.size} title={this.titleView} extra={this.extraView}>
