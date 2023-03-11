@@ -66,7 +66,7 @@ export default class ReactAntAbstractForm extends Component<
   resources = 'curds';
   size: CardSize = 'small';
   options = {};
-  debug = false;
+  rawJSON = false;
   actions = {
     resetAble: true,
     backAble: true,
@@ -248,7 +248,7 @@ export default class ReactAntAbstractForm extends Component<
       return new Promise((resolve) => {
         this.apiService[`${this.resources}_show`](data).then((res) => {
           const response = this.transformResponse(res);
-          const resValue = this.debug ? { value: JSON.stringify(response, null, 2) } : response;
+          const resValue = this.fromRawValue(response);
           nx.mix(meta.initialValues, resValue);
           this.setState({ meta });
           this.formRef.setFieldsValue(resValue);
@@ -259,11 +259,18 @@ export default class ReactAntAbstractForm extends Component<
     return Promise.resolve(this.fieldsValue);
   }
 
+  fromRawValue(inValue) {
+    return this.rawJSON ? { value: JSON.stringify(inValue, null, 2) } : inValue;
+  }
+
+  toRawValue(inValue) {
+    return this.rawJSON ? JSON.parse(inValue.value) : inValue;
+  }
+
   handleFinish = (inEvent) => {
     const { value } = inEvent.target;
     const { redirectAble } = this.actions;
-    const resValue = this.debug ? JSON.parse(value.value) : value;
-    return this.save(resValue, redirectAble);
+    return this.save(this.toRawValue(value), redirectAble);
   };
 
   handleInit = (inEvent) => {
