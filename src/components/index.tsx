@@ -45,7 +45,6 @@ export interface ReactAntAbstractFormProps {
   location?: any;
   navigate?: any;
   params?: any;
-  debug?: boolean;
 }
 
 interface ReactAntAbstractFormState {
@@ -59,9 +58,7 @@ export default class ReactAntAbstractForm extends Component<
 > {
   static displayName = CLASS_NAME;
   static version = '__VERSION__';
-  static defaultProps = {
-    debug: false
-  };
+  static defaultProps = {};
 
   private hotkeysRes;
   private winkeyRes;
@@ -69,6 +66,7 @@ export default class ReactAntAbstractForm extends Component<
   resources = 'curds';
   size: CardSize = 'small';
   options = {};
+  debug = false;
   actions = {
     resetAble: true,
     backAble: true,
@@ -247,11 +245,10 @@ export default class ReactAntAbstractForm extends Component<
     if (this.isEdit) {
       const data = nx.mix(null, this.params, this.options);
       const { meta } = this.state;
-      const { debug } = this.props;
       return new Promise((resolve) => {
         this.apiService[`${this.resources}_show`](data).then((res) => {
           const response = this.transformResponse(res);
-          const resValue = debug ? { value: response } : response;
+          const resValue = this.debug ? { value: response } : response;
           nx.mix(meta.initialValues, resValue);
           this.setState({ meta });
           this.formRef.setFieldsValue(resValue);
@@ -278,7 +275,7 @@ export default class ReactAntAbstractForm extends Component<
   };
 
   view() {
-    const { navigate, location, params, debug, ...props } = this.props;
+    const { navigate, location, params, ...props } = this.props;
     const { meta } = this.state;
     return (
       <Card size={this.size} title={this.titleView} extra={this.extraView}>
