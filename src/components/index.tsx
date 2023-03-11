@@ -4,13 +4,7 @@ import AntdFormBuilder from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
 import type { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js';
-import {
-  ArrowLeftOutlined,
-  FormOutlined,
-  SaveOutlined,
-  ReloadOutlined,
-  DiffOutlined
-} from '@ant-design/icons';
+import { ArrowLeftOutlined, FormOutlined, SaveOutlined, ReloadOutlined, DiffOutlined } from '@ant-design/icons';
 
 import '@jswork/next-dom-event';
 import '@jswork/next-is-empty-object';
@@ -52,10 +46,7 @@ interface ReactAntAbstractFormState {
   previousState?: any;
 }
 
-export default class ReactAntAbstractForm extends Component<
-  ReactAntAbstractFormProps,
-  ReactAntAbstractFormState
-> {
+export default class ReactAntAbstractForm extends Component<ReactAntAbstractFormProps, ReactAntAbstractFormState> {
   static displayName = CLASS_NAME;
   static version = '__VERSION__';
   static defaultProps = {};
@@ -127,8 +118,7 @@ export default class ReactAntAbstractForm extends Component<
 
   get extraView() {
     return (
-      <Button size={'small'} onClick={() => history.back()}>
-        <ArrowLeftOutlined />
+      <Button icon={<ArrowLeftOutlined />} size={'small'} onClick={() => history.back()}>
         返回
       </Button>
     );
@@ -140,23 +130,9 @@ export default class ReactAntAbstractForm extends Component<
     return (
       <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
         <Space>
-          <Button
-            disabled={!this.isTouched}
-            htmlType="submit"
-            type="primary"
-            icon={<SaveOutlined />}>
-            保存
-          </Button>
-          {resetAble && (
-            <Button icon={<ReloadOutlined />} htmlType="reset">
-              取消
-            </Button>
-          )}
-          {backAble && (
-            <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()}>
-              返回
-            </Button>
-          )}
+          <Button disabled={!this.isTouched} htmlType="submit" type="primary" icon={<SaveOutlined />} children="保存" />
+          {resetAble && <Button icon={<ReloadOutlined />} htmlType="reset" children="取消" />}
+          {backAble && <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children="返回" />}
         </Space>
       </Form.Item>
     );
