@@ -262,7 +262,7 @@ export default class ReactAntAbstractForm extends Component<
   handleFinish = (inEvent) => {
     const { value } = inEvent.target;
     const { redirectAble } = this.actions;
-    const resValue = this.debug ? JSON.parse(value).value : value;
+    const resValue = this.debug ? JSON.parse(value.value) : value;
     return this.save(resValue, redirectAble);
   };
 
