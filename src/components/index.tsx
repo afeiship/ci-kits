@@ -201,12 +201,30 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   /**
-   * Template method.
+   * @template
    * @param {*} inData
    * @returns
    */
   transformResponse(inData) {
     return inData;
+  }
+
+  /**
+   * @template
+   * Get value from api response.
+   * @param inValue
+   */
+  fromRawValue(inValue) {
+    return this.rawJSON ? { value: JSON.stringify(inValue, null, 2) } : inValue;
+  }
+
+  /**
+   * @template
+   * Transform value to submit.
+   * @param inValue
+   */
+  toRawValue(inValue) {
+    return this.rawJSON ? JSON.parse(inValue.value) : inValue;
   }
 
   save(inEvent, inRedirect) {
@@ -257,14 +275,6 @@ export default class ReactAntAbstractForm extends Component<
       });
     }
     return Promise.resolve(this.fieldsValue);
-  }
-
-  fromRawValue(inValue) {
-    return this.rawJSON ? { value: JSON.stringify(inValue, null, 2) } : inValue;
-  }
-
-  toRawValue(inValue) {
-    return this.rawJSON ? JSON.parse(inValue.value) : inValue;
   }
 
   handleFinish = (inEvent) => {
