@@ -248,7 +248,7 @@ export default class ReactAntAbstractForm extends Component<
       return new Promise((resolve) => {
         this.apiService[`${this.resources}_show`](data).then((res) => {
           const response = this.transformResponse(res);
-          const resValue = this.debug ? { value: response } : response;
+          const resValue = this.debug ? { value: JSON.stringify(response, null, 2) } : response;
           nx.mix(meta.initialValues, resValue);
           this.setState({ meta });
           this.formRef.setFieldsValue(resValue);
@@ -262,7 +262,8 @@ export default class ReactAntAbstractForm extends Component<
   handleFinish = (inEvent) => {
     const { value } = inEvent.target;
     const { redirectAble } = this.actions;
-    return this.save(value, redirectAble);
+    const resValue = this.debug ? JSON.parse(value).value : value;
+    return this.save(resValue, redirectAble);
   };
 
   handleInit = (inEvent) => {
