@@ -205,7 +205,8 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
 
   save(inEvent, inRedirect) {
     const action = this.isEdit ? 'update' : 'create';
-    const data = nx.mix(null, this.params, inEvent, this.options);
+    const value = this.toRawValue(inEvent);
+    const data = nx.mix(null, this.params, value, this.options);
     if (!this.isTouched) return message.info(MESSAGES.CONTENT_NO_CHANGED);
 
     return new Promise((resolve, reject) => {
@@ -256,7 +257,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
   handleFinish = (inEvent) => {
     const { value } = inEvent.target;
     const { redirectAble } = this.actions;
-    return this.save(this.toRawValue(value), redirectAble);
+    return this.save(value, redirectAble);
   };
 
   handleInit = (inEvent) => {
