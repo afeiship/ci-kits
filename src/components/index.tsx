@@ -28,7 +28,7 @@ hotkeys.filter = nx.stubTrue;
 const registerKey = (inName, inCallback) => {
   hotkeys(inName, inCallback);
   return {
-    destroy: () => hotkeys.unbind(inName, inCallback)
+    // destroy: () => hotkeys.unbind(inName, inCallback)
   };
 };
 
