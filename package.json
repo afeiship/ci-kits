@@ -18,8 +18,7 @@
     "docs": "tsc && vite build",
     "docs:serve": "vite preview",
     "test": "jest",
-    "pages": "github-cli -p",
-    "release": "release-it"
+    "pages": "github-cli -p"
   },
   "jest": {
     "preset": "ts-jest",
@@ -27,14 +26,14 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@jswork/next": "^1.0.9",
+    "@jswork/next": "^1.1.5",
     "@jswork/next-replace-in-file": "^1.0.0",
-    "@jswork/next-rollup-banner": "^1.0.2",
+    "@jswork/next-rollup-banner": "^1.0.9",
     "@jswork/react-fade-image": "^1.0.0",
     "@jswork/react-markdown-props": "^1.0.1",
     "@jswork/react-upload-media": "^1.1.5",
     "@jswork/react-upload-self": "^1.1.4",
-    "@jswork/wsui-em-justify-list": "^2.0.0",
+    "@jswork/wsui-em-justify-list": "^2.0.1",
     "@jswork/wsui-frame-wrapper": "^1.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@rollup/plugin-replace": "^2.3.4",
@@ -80,7 +79,7 @@
     "vite-plugin-pwa": "^0.7.3"
   },
   "dependencies": {
-    "@jswork/antd-form-builder": "^1.1.4",
+    "@jswork/antd-form-builder": "^1.1.9",
     "@jswork/next-dom-event": "^1.0.4",
     "@jswork/next-get2get": "^1.0.1",
     "@jswork/next-is-empty-object": "^1.0.2",

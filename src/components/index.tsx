@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Tag, Form, Card, Button, message, Tooltip, Space } from 'antd';
-import AntdFormBuilder from '@jswork/antd-form-builder';
+import { FormBuilder } from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
 import type { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js';
@@ -161,7 +161,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
   }
 
   componentDidMount() {
-    this.winkeyRes = nx.DomEvent.on(window, 'keyup', this.handleWinKeyup);
+    this.winkeyRes = nx.DomEvent.on(window as any, 'keyup', this.handleWinKeyup);
     this.handleResponse().then((res) => this.setState({ previousState: res }));
     // route service is async
     setTimeout(() => {
@@ -274,7 +274,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
     const { meta } = this.state;
     return (
       <Card size={this.size} title={this.titleView} extra={this.extraView}>
-        <AntdFormBuilder
+        <FormBuilder
           meta={meta}
           onInit={this.handleInit}
           onChange={this.handleChange}
@@ -282,7 +282,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
           {...this.getFormProps()}
           {...props}>
           {this.submitView}
-        </AntdFormBuilder>
+        </FormBuilder>
       </Card>
     );
   }
