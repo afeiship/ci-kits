@@ -79,7 +79,7 @@
     "vite-plugin-pwa": "^0.7.3"
   },
   "dependencies": {
-    "@jswork/antd-form-builder": "^1.1.9",
+    "@jswork/antd-form-builder": "^1.1.10",
     "@jswork/next-dom-event": "^1.0.4",
     "@jswork/next-get2get": "^1.0.1",
     "@jswork/next-is-empty-object": "^1.0.2",

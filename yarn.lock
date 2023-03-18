@@ -1269,13 +1269,18 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@jswork/antd-form-builder@^1.1.9":
-  version "1.1.9"
-  resolved "https://registry.npmmirror.com/@jswork/antd-form-builder/-/antd-form-builder-1.1.9.tgz#0f628def6a44a8d0ff972e329da9c8bd60508ab4"
-  integrity sha512-akcU3F/jXrnkc92jjK5b4SW+uD4trRLDMdbZwtOCyp4NcZHtzrOGMrVnQysJjP3+66YVAwNlgHtKcR6YDVQvgg==
+"@jswork/antd-afb-dist@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.npmmirror.com/@jswork/antd-afb-dist/-/antd-afb-dist-2.1.7.tgz#f0a8d2f0a93d2b7ab2f685f2bda79c415cc71118"
+  integrity sha512-8tDktHU/OngqhHz5Hd7QEUMutiaIwf+sFJzP/HKsHgR6b/YudLKOyYta9HFjRUfKrA4+JtdSfLiKQlHqUYCvww==
+
+"@jswork/antd-form-builder@^1.1.10":
+  version "1.1.10"
+  resolved "https://registry.npmmirror.com/@jswork/antd-form-builder/-/antd-form-builder-1.1.10.tgz#eaa929d7f1d22b8a2b44b9356d47dfd5d0480875"
+  integrity sha512-vP0krrKR5CPdxyd7W07xsLc1JR0f0jAwIWYStKoAfB3hZK1PK5He1/7sghzhafwYN9IeqDxq0UaxKoEbLaQP/w==
   dependencies:
+    "@jswork/antd-afb-dist" "^2.1.7"
     "@jswork/noop" "^1.0.0"
-    antd-form-builder "^2.1.4"
     classnames "^2.2.6"
     p-pipe "3"
 
@@ -1337,14 +1342,6 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@jswork/noop/-/noop-1.0.0.tgz#e9f080ab835b63fa17141239a2ecbf4731e5fd79"
   integrity sha512-jlMgESiuHp7W4pFCbhQssFVdzNjRDDnVfmhOIYmHRbKxWwTOEFpgC2e/BbXc/u96N3qTEEy9o3Wie4hUu0fAYw==
-
-"@jswork/react-admin-icons@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@jswork/react-admin-icons/-/react-admin-icons-1.0.0.tgz#1adc9814a78d2d69537492c5bdac3cdd1782eae3"
-  integrity sha512-Ao3YAMATtU067LlQTTjwcipdmU2wkxZd9nygsqZC0YiWrUapN06PSQTT9GVT6rHMtG3TsdmZzu9Jpcs3zdnc0w==
-  dependencies:
-    "@jswork/noop" "^1.0.0"
-    classnames "^2.2.6"
 
 "@jswork/react-fade-image@^1.0.0":
   version "1.0.0"
@@ -1994,13 +1991,6 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   integrity sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==
   dependencies:
     color-convert "^2.0.1"
-
-antd-form-builder@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.npmmirror.com/antd-form-builder/-/antd-form-builder-2.1.4.tgz#e7005f5b88d9fbb9cbd9fe00263260bc3867d9dc"
-  integrity sha512-YPmWyOPuOzCyeFKieDh3sVbx5jeblT5CuwUwzsMYC6IW33YDA1+K7MCiVzw/jO6T7KdIzgiewuWFOTcFQlZsvg==
-  dependencies:
-    eslint-plugin-react-hooks "^4.0.6"
 
 antd@^5.0.3:
   version "5.0.3"
@@ -5264,11 +5254,6 @@ escope@^3.6.0:
     es6-weak-map "^2.0.1"
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
-
-eslint-plugin-react-hooks@^4.0.6:
-  version "4.6.0"
-  resolved "https://registry.npmmirror.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.6.0.tgz#4c3e697ad95b77e93f8646aaa1630c1ba607edd3"
-  integrity sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==
 
 esprima@^2.6.0:
   version "2.7.3"
