@@ -84,7 +84,6 @@
     "@jswork/next-get2get": "^1.0.1",
     "@jswork/next-is-empty-object": "^1.0.2",
     "@jswork/noop": "^1.0.0",
-    "@jswork/react-admin-icons": "^1.0.0",
     "classnames": "^2.2.6",
     "hotkeys-js": "^3.8.7"
   },
