@@ -28,8 +28,10 @@ hotkeys.filter = nx.stubTrue;
 const registerKey = (inName, inCallback) => {
   hotkeys(inName, inCallback);
   return {
-    // todo: unbind error in vite
-    // destroy: () => hotkeys.unbind(inName, inCallback)
+    destroy: () => {
+      // todo: unbind error in vite
+      // hotkeys.unbind(inName, inCallback);
+    }
   };
 };
 
