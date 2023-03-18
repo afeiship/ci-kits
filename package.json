@@ -18,7 +18,8 @@
     "docs": "tsc && vite build",
     "docs:serve": "vite preview",
     "test": "jest",
-    "pages": "github-cli -p"
+    "pages": "github-cli -p",
+    "release": "release-it"
   },
   "jest": {
     "preset": "ts-jest",
@@ -54,7 +55,6 @@
     "react-dom": "^18.2.0",
     "react-scripts-ts": "^3.1.0",
     "react-test-renderer": "^17.0.1",
-    "release-it": "^15.1.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.36.0",
     "rollup-plugin-auto-external": "^2.0.0",
