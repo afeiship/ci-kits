@@ -3,7 +3,7 @@ import { Tag, Form, Card, Button, message, Tooltip, Space } from 'antd';
 import { FormBuilder } from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
 import type { CardSize } from 'antd/lib/card/Card';
-import hotkeys from 'hotkeys-js';
+import hotkeys from 'hotkeys-js/dist/hotkeys';
 import { ArrowLeftOutlined, FormOutlined, SaveOutlined, ReloadOutlined, DiffOutlined } from '@ant-design/icons';
 
 import '@jswork/next-dom-event';
@@ -28,10 +28,7 @@ hotkeys.filter = nx.stubTrue;
 const registerKey = (inName, inCallback) => {
   hotkeys(inName, inCallback);
   return {
-    destroy: () => {
-      // todo: unbind error in vite
-      // hotkeys.unbind(inName, inCallback);
-    }
+    destroy: () => hotkeys.unbind(inName, inCallback)
   };
 };
 
