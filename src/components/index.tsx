@@ -4,7 +4,14 @@ import { FormBuilder } from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
 import type { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js/dist/hotkeys';
-import { ArrowLeftOutlined, FormOutlined, SaveOutlined, ReloadOutlined, DiffOutlined } from '@ant-design/icons';
+import {
+  ArrowLeftOutlined,
+  MehOutlined,
+  FormOutlined,
+  SaveOutlined,
+  ReloadOutlined,
+  DiffOutlined
+} from '@ant-design/icons';
 
 import '@jswork/next-dom-event';
 import '@jswork/next-is-empty-object';
@@ -61,6 +68,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
   actions = {
     resetAble: true,
     backAble: true,
+    refreshAble: true,
     redirectAble: true
   };
 
@@ -118,9 +126,12 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
 
   get extraView() {
     return (
-      <Button icon={<ArrowLeftOutlined />} size={'small'} onClick={() => history.back()}>
-        返回
-      </Button>
+      <Space>
+        <Button icon={<ReloadOutlined />} size={'small'} children="刷新" onClick={() => this.load()} />
+        <Button icon={<ArrowLeftOutlined />} size={'small'} onClick={() => history.back()}>
+          返回
+        </Button>
+      </Space>
     );
   }
 
@@ -131,7 +142,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
       <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
         <Space>
           <Button disabled={!this.isTouched} htmlType="submit" type="primary" icon={<SaveOutlined />} children="保存" />
-          {resetAble && <Button icon={<ReloadOutlined />} htmlType="reset" children="取消" />}
+          {resetAble && <Button icon={<MehOutlined />} htmlType="reset" children="取消" />}
           {backAble && <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children="返回" />}
         </Space>
       </Form.Item>
@@ -162,7 +173,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
 
   componentDidMount() {
     this.winkeyRes = nx.DomEvent.on(window as any, 'keyup', this.handleWinKeyup);
-    this.handleResponse().then((res) => this.setState({ previousState: res }));
+    void this.load();
     // route service is async
     setTimeout(() => {
       nx.set(history, 'current', this.props);
@@ -203,6 +214,10 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
     return this.rawJSON ? JSON.parse(inValue.value) : inValue;
   }
 
+  load() {
+    return this.handleResponse().then((res) => this.setState({ previousState: res }));
+  }
+
   save(inEvent, inRedirect) {
     const action = this.isEdit ? 'update' : 'create';
     const value = this.toRawValue(inEvent);
@@ -215,6 +230,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
           this.setState({ previousState: this.fieldsValue });
           void message.success(MESSAGES.OPERATION_DONE);
           inRedirect && history.back();
+          this.isEdit && this.load();
           resolve(res);
         })
         .catch(reject);

@@ -25,6 +25,7 @@ nx.$api = {
     return Promise.resolve('index');
   },
   curds_show: function () {
+    console.log('curd: show..');
     return Promise.resolve('show');
   },
   curds_update: function () {
