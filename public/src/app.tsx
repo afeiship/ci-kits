@@ -25,8 +25,11 @@ nx.$api = {
     return Promise.resolve('index');
   },
   curds_show: function () {
-    console.log('curd: show..');
-    return Promise.resolve('show');
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('show');
+      }, 1000);
+    });
   },
   curds_update: function () {
     return Promise.resolve('update');

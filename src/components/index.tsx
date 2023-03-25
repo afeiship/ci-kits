@@ -51,9 +51,13 @@ export interface ReactAntAbstractFormProps {
 interface ReactAntAbstractFormState {
   meta: any;
   previousState?: any;
+  busy?: boolean;
 }
 
-export default class ReactAntAbstractForm extends Component<ReactAntAbstractFormProps, ReactAntAbstractFormState> {
+export default class ReactAntAbstractForm extends Component<
+  ReactAntAbstractFormProps,
+  ReactAntAbstractFormState
+> {
   static displayName = CLASS_NAME;
   static version = '__VERSION__';
   static defaultProps = {};
@@ -78,7 +82,7 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
   constructor(inProps) {
     super(inProps);
     this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
-    this.state = nx.mix(null, { meta: {}, previousState: null }, this.initialState());
+    this.state = nx.mix(null, { meta: {}, previousState: null, buzy: false }, this.initialState());
     this.init();
   }
 
@@ -125,9 +129,16 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
   }
 
   get extraView() {
+    const { busy } = this.state;
     return (
       <Space>
-        <Button icon={<ReloadOutlined />} size={'small'} children="刷新" onClick={() => this.load()} />
+        <Button
+          loading={busy}
+          icon={<ReloadOutlined />}
+          size={'small'}
+          children="刷新"
+          onClick={this.load}
+        />
         <Button icon={<ArrowLeftOutlined />} size={'small'} onClick={() => history.back()}>
           返回
         </Button>
@@ -141,9 +152,17 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
     return (
       <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
         <Space>
-          <Button disabled={!this.isTouched} htmlType="submit" type="primary" icon={<SaveOutlined />} children="保存" />
+          <Button
+            disabled={!this.isTouched}
+            htmlType="submit"
+            type="primary"
+            icon={<SaveOutlined />}
+            children="保存"
+          />
           {resetAble && <Button icon={<MehOutlined />} htmlType="reset" children="取消" />}
-          {backAble && <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children="返回" />}
+          {backAble && (
+            <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children="返回" />
+          )}
         </Space>
       </Form.Item>
     );
@@ -214,9 +233,9 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
     return this.rawJSON ? JSON.parse(inValue.value) : inValue;
   }
 
-  load() {
+  load = () => {
     return this.handleResponse().then((res) => this.setState({ previousState: res }));
-  }
+  };
 
   save(inEvent, inRedirect) {
     const action = this.isEdit ? 'update' : 'create';
@@ -256,12 +275,13 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
     if (this.isEdit) {
       const data = nx.mix(null, this.params, this.options);
       const { meta } = this.state;
+      this.setState({ busy: true });
       return new Promise((resolve) => {
         this.apiService[`${this.resources}_show`](data).then((res) => {
           const response = this.transformResponse(res);
           const resValue = this.fromRawValue(response);
           nx.mix(meta.initialValues, resValue);
-          this.setState({ meta });
+          this.setState({ meta, busy: false });
           this.formRef.setFieldsValue(resValue);
           resolve(this.fieldsValue);
         });
@@ -287,9 +307,9 @@ export default class ReactAntAbstractForm extends Component<ReactAntAbstractForm
 
   view() {
     const { navigate, location, params, ...props } = this.props;
-    const { meta } = this.state;
+    const { meta, busy } = this.state;
     return (
-      <Card size={this.size} title={this.titleView} extra={this.extraView}>
+      <Card loading={busy} size={this.size} title={this.titleView} extra={this.extraView}>
         <FormBuilder
           meta={meta}
           onInit={this.handleInit}
