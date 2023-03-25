@@ -308,8 +308,10 @@ export default class ReactAntAbstractForm extends Component<
   view() {
     const { navigate, location, params, ...props } = this.props;
     const { meta, busy } = this.state;
+    const computedBusy = this.rawJSON ? false : busy;
+
     return (
-      <Card loading={busy} size={this.size} title={this.titleView} extra={this.extraView}>
+      <Card loading={computedBusy} size={this.size} title={this.titleView} extra={this.extraView}>
         <FormBuilder
           meta={meta}
           onInit={this.handleInit}
