@@ -234,7 +234,7 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   load = () => {
-    return this.handleResponse().then((res) => this.setState({ previousState: res }));
+    return this.handleResponse();
   };
 
   save(inEvent, inRedirect) {
@@ -246,10 +246,10 @@ export default class ReactAntAbstractForm extends Component<
     return new Promise((resolve, reject) => {
       this.apiService[`${this.resources}_${action}`](data)
         .then((res) => {
-          this.setState({ previousState: this.fieldsValue });
           void message.success(MESSAGES.OPERATION_DONE);
           inRedirect && history.back();
           this.isEdit && this.load();
+          this.setState({ previousState: this.fieldsValue });
           resolve(res);
         })
         .catch(reject);
@@ -281,7 +281,7 @@ export default class ReactAntAbstractForm extends Component<
           const response = this.transformResponse(res);
           const resValue = this.fromRawValue(response);
           nx.mix(meta.initialValues, resValue);
-          this.setState({ meta, busy: false });
+          this.setState({ meta, busy: false, previousState: resValue });
           this.formRef.setFieldsValue(resValue);
           resolve(this.fieldsValue);
         });

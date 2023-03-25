@@ -17,6 +17,13 @@
   dependencies:
     "@ctrl/tinycolor" "^3.4.0"
 
+"@ant-design/colors@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.npmmirror.com/@ant-design/colors/-/colors-7.0.0.tgz#eb7eecead124c3533aea05d61254f0a17f2b61b3"
+  integrity sha512-iVm/9PfGCbC0dSMBrz7oiEXZaaGH7ceU40OJEfKmyuzR9R5CRimJYPlRiFtMQGQcbNMea/ePcoIebi4ASGYXtg==
+  dependencies:
+    "@ctrl/tinycolor" "^3.4.0"
+
 "@ant-design/cssinjs@^1.0.0":
   version "1.1.0"
   resolved "https://registry.npmmirror.com/@ant-design/cssinjs/-/cssinjs-1.1.0.tgz#d7b5e0811e8241e66c2812c179bd7b7ef961f7ab"
@@ -41,6 +48,17 @@
   integrity sha512-aoB4Z7JA431rt6d4u+8xcNPPCrdufSRMUOpxa1ab6mz1JCQZOEVolj2WVs/tDFmN62zzK30mNelEsprLYsSF3g==
   dependencies:
     "@ant-design/colors" "^6.0.0"
+    "@ant-design/icons-svg" "^4.2.1"
+    "@babel/runtime" "^7.11.2"
+    classnames "^2.2.6"
+    rc-util "^5.9.4"
+
+"@ant-design/icons@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.npmmirror.com/@ant-design/icons/-/icons-5.0.1.tgz#febb1fdc5776f58187b2c953ac9a4496069d045b"
+  integrity sha512-ZyF4ksXCcdtwA/1PLlnFLcF/q8/MhwxXhKHh4oCHDA4Ip+ZzAHoICtyp4wZWfiCVDP0yuz3HsjyvuldHFb3wjA==
+  dependencies:
+    "@ant-design/colors" "^7.0.0"
     "@ant-design/icons-svg" "^4.2.1"
     "@babel/runtime" "^7.11.2"
     classnames "^2.2.6"
@@ -1284,6 +1302,13 @@
     classnames "^2.2.6"
     p-pipe "3"
 
+"@jswork/filter-react-props@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmmirror.com/@jswork/filter-react-props/-/filter-react-props-1.0.2.tgz#a9041c983bb4c08985601e6ac7839003f15ddbde"
+  integrity sha512-4Ykv7PNiLQYWzU+8SVPlLWjlaB22AhGLety7JO7xJgajacby6InIo9rErxW/Bxbxpm81A4uX6Upecklgn3wVWw==
+  dependencies:
+    filter-react-props "0.0.4"
+
 "@jswork/next-array-replace@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@jswork/next-array-replace/-/next-array-replace-1.0.0.tgz#f06991681fb2a42190b9ce6f428d13bee6f2390f"
@@ -1342,6 +1367,17 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@jswork/noop/-/noop-1.0.0.tgz#e9f080ab835b63fa17141239a2ecbf4731e5fd79"
   integrity sha512-jlMgESiuHp7W4pFCbhQssFVdzNjRDDnVfmhOIYmHRbKxWwTOEFpgC2e/BbXc/u96N3qTEEy9o3Wie4hUu0fAYw==
+
+"@jswork/react-codeflask@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npmmirror.com/@jswork/react-codeflask/-/react-codeflask-1.0.7.tgz#d4cd49fc81f22382d222950c71088105521f85b7"
+  integrity sha512-quv6qm85g35agJdEu9MF5d2mM7TdQ+FqH+oEPqtrNJAnUOHF6PheuLW3WO2hAsBE/oiAEjnu8qVkQJAQIA2tvQ==
+  dependencies:
+    "@jswork/filter-react-props" "^1.0.2"
+    "@jswork/noop" "^1.0.0"
+    classnames "^2.2.6"
+    codeflask "^1.4.1"
+    prismjs "^1.25.0"
 
 "@jswork/react-fade-image@^1.0.0":
   version "1.0.0"
@@ -1416,11 +1452,6 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@jswork/wsui-em-justify-list/-/wsui-em-justify-list-2.0.0.tgz#106de8428db92917ee7c9c402622c7bfa76e44f4"
   integrity sha512-KtZ7jCpwS3o/J+iXLhkKcU5WqsO9VdxwLz1Tcz/TQ6DRPgCTyYG413ZQNkTp7W6lE5K9C+qd+/uLTQWkoGXcoQ==
-
-"@jswork/wsui-em-justify-list@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.npmmirror.com/@jswork/wsui-em-justify-list/-/wsui-em-justify-list-2.0.1.tgz#a93b6908f7755543dd55bb89a30891c254489ec4"
-  integrity sha512-R8SjhUp5tqXwr40P8blnR78MP+ckL3Se77oPBsYl4za9ABEaDW3KirIxOo47zI+khrd9s8UDkb01l63pRFkFsQ==
 
 "@jswork/wsui-frame-wrapper@^1.0.0":
   version "1.0.0"
@@ -1676,6 +1707,11 @@
   version "2.6.3"
   resolved "https://registry.npmmirror.com/@types/prettier/-/prettier-2.6.3.tgz#68ada76827b0010d0db071f739314fa429943d0a"
   integrity sha512-ymZk3LEC/fsut+/Q5qejp6R9O1rMxz3XaRHDV6kX8MrGAhOSPqVARbDi+EZvInBpw+BnCX3TD240byVkOfQsHg==
+
+"@types/prismjs@^1.9.1":
+  version "1.26.0"
+  resolved "https://registry.npmmirror.com/@types/prismjs/-/prismjs-1.26.0.tgz#a1c3809b0ad61c62cac6d4e0c56d610c910b7654"
+  integrity sha512-ZTaqn/qSqUuAq1YwvOFQfVW1AR/oQJlLSZVustdjwI+GZ8kr0MSHBj0tsXPW1EqHubx50gtBEjbPGsdZwQwCjQ==
 
 "@types/prop-types@*":
   version "15.7.5"
@@ -3908,6 +3944,14 @@ code-point-at@^1.0.0:
   resolved "https://registry.npmmirror.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha512-RpAVKQA5T63xEj6/giIbUEtZwJ4UFIc3ZtvEkiaUERylqe8xb5IvqcgOurZLahv93CLKfxcw5YI+DZcUBRyLXA==
 
+codeflask@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.npmmirror.com/codeflask/-/codeflask-1.4.1.tgz#c5229854e3f648377922a75f1145f7316030d3db"
+  integrity sha512-4vb2IbE/iwvP0Uubhd2ixVeysm3KNC2pl7SoDaisxq1juhZzvap3qbaX7B2CtpQVvv5V9sjcQK8hO0eTcY0V9Q==
+  dependencies:
+    "@types/prismjs" "^1.9.1"
+    prismjs "^1.14.0"
+
 collect-v8-coverage@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmmirror.com/collect-v8-coverage/-/collect-v8-coverage-1.0.1.tgz#cc2c8e94fc18bbdffe64d6534570c8a673b27f59"
@@ -5722,6 +5766,11 @@ fill-range@^7.0.1:
   integrity sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==
   dependencies:
     to-regex-range "^5.0.1"
+
+filter-react-props@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.npmmirror.com/filter-react-props/-/filter-react-props-0.0.4.tgz#d21af9ddc31a2fcc1b567684ec69b99c1bfd8344"
+  integrity sha512-f/DRNP1B6C16RxwqDUQf85ud22F4xVInqDGV9SqBbVEq2yY8GwFNiQZas5MHaYjiqcItuGYR5dEbGf9/e07rCQ==
 
 finalhandler@1.2.0:
   version "1.2.0"
@@ -10197,6 +10246,11 @@ pretty-format@^26.0.0, pretty-format@^26.6.2:
     ansi-regex "^5.0.0"
     ansi-styles "^4.0.0"
     react-is "^17.0.1"
+
+prismjs@^1.14.0, prismjs@^1.25.0:
+  version "1.29.0"
+  resolved "https://registry.npmmirror.com/prismjs/-/prismjs-1.29.0.tgz#f113555a8fa9b57c35e637bba27509dcf802dd12"
+  integrity sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==
 
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"

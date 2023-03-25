@@ -31,6 +31,7 @@
     "@jswork/next": "^1.1.5",
     "@jswork/next-replace-in-file": "^1.0.0",
     "@jswork/next-rollup-banner": "^1.0.9",
+    "@jswork/react-codeflask": "^1.0.7",
     "@jswork/react-fade-image": "^1.0.0",
     "@jswork/react-markdown-props": "^1.0.1",
     "@jswork/react-upload-media": "^1.1.5",
