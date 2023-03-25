@@ -1,5 +1,4 @@
 import typescript from 'rollup-plugin-typescript2';
-import commonjs from 'rollup-plugin-commonjs';
 // import external from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import copy from 'rollup-plugin-copy';
@@ -15,20 +14,37 @@ import '@jswork/next-rollup-banner';
 export default [
   {
     input: 'src/main.ts',
-    output: {
-      file: pkg.main,
-      format: 'umd',
-      exports: 'named',
-      sourcemap: false,
-      name: 'ReactAntAbstractForm',
-      globals: {
-        '@jswork/noop': 'noop',
-        'prop-types': 'PropTypes',
-        'classnames': 'classNames',
-        'react': 'React',
-        'react-dom': 'ReactDOM'
+    output: [
+      {
+        file: pkg.main,
+        format: 'cjs',
+        exports: 'named',
+        sourcemap: false,
+        name: 'ReactAntAbstractForm',
+        globals: {
+          '@jswork/noop': 'noop',
+          'prop-types': 'PropTypes',
+          'classnames': 'classNames',
+          'react': 'React',
+          'react-dom': 'ReactDOM'
+        }
+      },
+      {
+        // create esm
+        file: pkg.module,
+        format: 'esm',
+        exports: 'named',
+        sourcemap: false,
+        name: 'ReactAntAbstractForm',
+        globals: {
+          '@jswork/noop': 'noop',
+          'prop-types': 'PropTypes',
+          'classnames': 'classNames',
+          'react': 'React',
+          'react-dom': 'ReactDOM'
+        }
       }
-    },
+    ],
     plugins: [
       // external(),
       externals({
@@ -53,14 +69,6 @@ export default [
       typescript({
         tsconfig: 'tsconfig.build.json',
         clean: true
-      }),
-      commonjs({
-        include: ['node_modules/**'],
-        namedExports: {
-          'node_modules/react-is/index.js': Object.keys(require('react-is')),
-          'node_modules/react/react.js': ['Children', 'Component', 'PropTypes', 'createElement'],
-          'node_modules/react-dom/index.js': ['render']
-        }
       })
     ]
   },

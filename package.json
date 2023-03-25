@@ -5,8 +5,8 @@
   "description": "For curd form based on react.",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "typings": "dist/main.d.ts",
-  "type": "module",
   "files": [
     "dist"
   ],
