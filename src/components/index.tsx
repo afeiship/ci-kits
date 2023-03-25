@@ -123,10 +123,10 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get isTouched() {
-    return this.formRef?.isFieldsTouched();
-    // const { previousState } = this.state;
-    // if (!this.formRef || !previousState) return false;
-    // return JSON.stringify(previousState) !== JSON.stringify(this.fieldsValue);
+    if (!this.rawJSON) return this.formRef?.isFieldsTouched;
+    const { previousState } = this.state;
+    if (!this.formRef || !previousState) return false;
+    return JSON.stringify(previousState) !== JSON.stringify(this.fieldsValue);
   }
 
   get extraView() {
@@ -285,7 +285,7 @@ export default class ReactAntAbstractForm extends Component<
           const resValue = this.fromRawValue(response);
           nx.mix(meta.initialValues, resValue);
           this.setState({ meta, busy: false, previousState: resValue });
-          this.formRef.setFieldsValue(resValue)
+          this.formRef.setFieldsValue(resValue);
           resolve(resValue);
         });
       });
