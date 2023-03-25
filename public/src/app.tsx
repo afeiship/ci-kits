@@ -27,7 +27,7 @@ nx.$api = {
   curds_show: function () {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve('show');
+        resolve({ username: 'aaa' });
       }, 1000);
     });
   },
@@ -45,9 +45,7 @@ class App extends ReactAntAbstractForm {
       meta: {
         gutter: 100,
         formItemLayout: [6, 18],
-        initialValues: {
-          media: []
-        },
+        initialValues: {},
         fields: [
           {
             key: 'username',

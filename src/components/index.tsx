@@ -119,13 +119,14 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get fieldsValue() {
-    return this.formRef.getFieldsValue();
+    return this.formRef?.getFieldsValue();
   }
 
   get isTouched() {
-    const { previousState } = this.state;
-    if (!this.formRef || !previousState) return false;
-    return JSON.stringify(previousState) !== JSON.stringify(this.fieldsValue);
+    return this.formRef?.isFieldsTouched();
+    // const { previousState } = this.state;
+    // if (!this.formRef || !previousState) return false;
+    // return JSON.stringify(previousState) !== JSON.stringify(this.fieldsValue);
   }
 
   get extraView() {
@@ -191,6 +192,7 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   componentDidMount() {
+    window['ss'] = this;
     this.winkeyRes = nx.DomEvent.on(window as any, 'keyup', this.handleWinKeyup);
     void this.load();
     // route service is async
@@ -234,6 +236,7 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   load = () => {
+    console.log('load.');
     return this.handleResponse();
   };
 
@@ -282,8 +285,8 @@ export default class ReactAntAbstractForm extends Component<
           const resValue = this.fromRawValue(response);
           nx.mix(meta.initialValues, resValue);
           this.setState({ meta, busy: false, previousState: resValue });
-          this.formRef.setFieldsValue(resValue);
-          resolve(this.fieldsValue);
+          this.formRef.setFieldsValue(resValue)
+          resolve(resValue);
         });
       });
     }
@@ -309,6 +312,8 @@ export default class ReactAntAbstractForm extends Component<
     const { navigate, location, params, ...props } = this.props;
     const { meta, busy } = this.state;
     const computedBusy = this.rawJSON ? false : busy;
+
+    console.log(this.fieldsValue);
 
     return (
       <Card loading={computedBusy} size={this.size} title={this.titleView} extra={this.extraView}>
