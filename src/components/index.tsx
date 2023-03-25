@@ -236,7 +236,6 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   load = () => {
-    console.log('load.');
     return this.handleResponse();
   };
 
@@ -312,8 +311,6 @@ export default class ReactAntAbstractForm extends Component<
     const { navigate, location, params, ...props } = this.props;
     const { meta, busy } = this.state;
     const computedBusy = this.rawJSON ? false : busy;
-
-    console.log(this.fieldsValue);
 
     return (
       <Card loading={computedBusy} size={this.size} title={this.titleView} extra={this.extraView}>
