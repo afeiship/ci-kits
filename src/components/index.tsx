@@ -192,7 +192,6 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   componentDidMount() {
-    window['ss'] = this;
     this.winkeyRes = nx.DomEvent.on(window as any, 'keyup', this.handleWinKeyup);
     void this.load();
     // route service is async

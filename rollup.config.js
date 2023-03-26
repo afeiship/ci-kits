@@ -11,39 +11,25 @@ import replace from '@rollup/plugin-replace';
 import pkg from './package.json';
 import '@jswork/next-rollup-banner';
 
+const sharedOutput = {
+  exports: 'named',
+  sourcemap: false,
+  name: 'ReactAntAbstractForm',
+  globals: {
+    '@jswork/noop': 'noop',
+    'prop-types': 'PropTypes',
+    'classnames': 'classNames',
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+  }
+};
+
 export default [
   {
     input: 'src/main.ts',
     output: [
-      {
-        file: pkg.main,
-        format: 'cjs',
-        exports: 'named',
-        sourcemap: false,
-        name: 'ReactAntAbstractForm',
-        globals: {
-          '@jswork/noop': 'noop',
-          'prop-types': 'PropTypes',
-          'classnames': 'classNames',
-          'react': 'React',
-          'react-dom': 'ReactDOM'
-        }
-      },
-      {
-        // create esm
-        file: pkg.module,
-        format: 'esm',
-        exports: 'named',
-        sourcemap: false,
-        name: 'ReactAntAbstractForm',
-        globals: {
-          '@jswork/noop': 'noop',
-          'prop-types': 'PropTypes',
-          'classnames': 'classNames',
-          'react': 'React',
-          'react-dom': 'ReactDOM'
-        }
-      }
+      { file: pkg.main, format: 'cjs', ...sharedOutput },
+      { file: pkg.module, format: 'esm', ...sharedOutput }
     ],
     plugins: [
       // external(),
