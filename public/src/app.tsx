@@ -53,9 +53,24 @@ class App extends ReactAntAbstractForm {
             tooltip: '用户名',
             rules: [{ max: 10, min: 5 }]
           },
-          { key: 'password', label: 'Password', widget: 'password' },
+          { key: 'pw' },
           {
-            key: 'media',
+            key: 'media'
+          }
+        ]
+      }
+    };
+  }
+
+  getFormProps() {
+    return {
+      presets: {
+        fields: {
+          pw: {
+            label: 'Password',
+            widget: 'password'
+          },
+          media: {
             label: 'Media',
             widget: ReactUploadMedia,
             widgetProps: {
@@ -70,7 +85,7 @@ class App extends ReactAntAbstractForm {
               }
             }
           }
-        ]
+        }
       }
     };
   }
