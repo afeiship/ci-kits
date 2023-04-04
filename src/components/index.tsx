@@ -276,11 +276,12 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   handleWinKeyup = () => {
-    const hasMarked = document.title.includes('*');
+    const title = document.title;
+    const hasMarked = title.includes('*');
     if (this.isTouched) {
-      !hasMarked && (document.title = document.title + '*');
+      !hasMarked && (document.title = title + '*');
     } else {
-      hasMarked && (document.title = document.title.slice(0, -1));
+      hasMarked && (document.title = title.slice(0, -1));
     }
   };
 
