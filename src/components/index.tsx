@@ -71,6 +71,9 @@ export default class ReactAntAbstractForm extends Component<
   rawJSON = false;
   rawField = 'rawJSON';
   isInitManually = false;
+  apiService: any;
+  formRef: any;
+
   actions = {
     resetAble: true,
     backAble: true,
@@ -78,8 +81,6 @@ export default class ReactAntAbstractForm extends Component<
     redirectAble: true
   };
 
-  apiService: any;
-  formRef: any;
 
   constructor(inProps) {
     super(inProps);
