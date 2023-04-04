@@ -80,8 +80,7 @@ export default class ReactAntAbstractForm extends Component<
     refreshAble: true,
     redirectAble: true
   };
-
-
+  
   constructor(inProps) {
     super(inProps);
     this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
