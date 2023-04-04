@@ -51,7 +51,7 @@ export interface ReactAntAbstractFormProps {
 interface ReactAntAbstractFormState {
   meta: any;
   previousState?: any;
-  busy?: boolean;
+  loading?: boolean;
 }
 
 export default class ReactAntAbstractForm extends Component<
@@ -124,6 +124,10 @@ export default class ReactAntAbstractForm extends Component<
     return this.formRef?.getFieldsValue();
   }
 
+  set fieldsValue(inValue) {
+    this.formRef?.setFieldsValue(inValue);
+  }
+
   get isTouched() {
     if (!this.rawJSON) return this.formRef?.isFieldsTouched();
     const { previousState } = this.state;
@@ -132,11 +136,11 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get extraView() {
-    const { busy } = this.state;
+    const { loading } = this.state;
     return (
       <Space>
         <Button
-          loading={busy}
+          loading={loading}
           icon={<ReloadOutlined />}
           size={'small'}
           children='刷新'
@@ -197,14 +201,15 @@ export default class ReactAntAbstractForm extends Component<
   componentDidMount() {
     this.winkeyRes = nx.DomEvent.on(window as any, 'keyup', this.handleWinKeyup);
     setTimeout(() => nx.set(history, 'current', this.props), 0);
-    !this.isInitManually && void this.load();
+    !this.isInitManually && this.load();
   }
 
   componentWillUnmount() {
-    const hasMarked = document.title.includes('*');
+    const title = document.title;
+    const hasMarked = title.includes('*');
+    if (hasMarked) document.title = title.slice(0, -1);
     this.hotkeysRes.destroy();
     this.winkeyRes.destroy();
-    if (hasMarked) document.title = document.title.slice(0, -1);
   }
 
   /**
@@ -238,19 +243,17 @@ export default class ReactAntAbstractForm extends Component<
     if (this.isEdit) {
       const data = nx.mix(null, this.params, this.options);
       const { meta } = this.state;
-      this.setState({ busy: true });
-      return new Promise((resolve) => {
-        this.apiService[`${this.resources}_show`](data).then((res) => {
-          const response = this.transformResponse(res);
-          const resValue = this.fromRawValue(response);
-          nx.mix(meta.initialValues, resValue);
-          this.setState({ meta, busy: false, previousState: resValue });
-          this.formRef.setFieldsValue(resValue);
-          resolve(resValue);
-        });
+      this.setState({ loading: true });
+      this.apiService[`${this.resources}_show`](data).then((res) => {
+        const response = this.transformResponse(res);
+        const resValue = this.fromRawValue(response);
+        nx.mix(meta.initialValues, resValue);
+        this.setState({ meta, previousState: resValue });
+        this.fieldsValue = resValue;
+      }).finally(() => {
+        this.setState({ loading: false });
       });
     }
-    return Promise.resolve(this.fieldsValue);
   };
 
   save(inEvent, inRedirect) {
@@ -299,8 +302,8 @@ export default class ReactAntAbstractForm extends Component<
   };
 
   view() {
-    const { meta, busy } = this.state;
-    const computedBusy = this.rawJSON ? false : busy;
+    const { meta, loading } = this.state;
+    const computedBusy = this.rawJSON ? false : loading;
 
     return (
       <Card loading={computedBusy} size={this.size} title={this.titleView} extra={this.extraView}>
