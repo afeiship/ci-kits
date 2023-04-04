@@ -68,7 +68,7 @@ export default class ReactAntAbstractForm extends Component<
   resources = 'curds';
   size: CardSize = 'small';
   options = {};
-  rawJSON = false;
+  rawJSON: false | string = false;
   isInitManually = false;
   actions = {
     resetAble: true,
@@ -221,7 +221,8 @@ export default class ReactAntAbstractForm extends Component<
    * @param inValue
    */
   fromRawValue(inValue) {
-    return this.rawJSON ? { value: JSON.stringify(inValue, null, 2) } : inValue;
+    const rawJSON = this.rawJSON;
+    return rawJSON ? { [rawJSON]: JSON.stringify(inValue, null, 2) } : inValue;
   }
 
   /**
@@ -230,7 +231,8 @@ export default class ReactAntAbstractForm extends Component<
    * @param inValue
    */
   toRawValue(inValue) {
-    return this.rawJSON ? JSON.parse(inValue.value) : inValue;
+    const rawJSON = this.rawJSON;
+    return rawJSON ? JSON.parse(inValue[rawJSON]) : inValue;
   }
 
   load = () => {
