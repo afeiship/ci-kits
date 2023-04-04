@@ -69,6 +69,7 @@ export default class ReactAntAbstractForm extends Component<
   size: CardSize = 'small';
   options = {};
   rawJSON = false;
+  isInitManually = false;
   actions = {
     resetAble: true,
     backAble: true,
@@ -194,11 +195,8 @@ export default class ReactAntAbstractForm extends Component<
 
   componentDidMount() {
     this.winkeyRes = nx.DomEvent.on(window as any, 'keyup', this.handleWinKeyup);
-    void this.load();
-    // route service is async
-    setTimeout(() => {
-      nx.set(history, 'current', this.props);
-    }, 0);
+    setTimeout(() => nx.set(history, 'current', this.props), 0);
+    !this.isInitManually && void this.load();
   }
 
   componentWillUnmount() {
