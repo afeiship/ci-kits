@@ -88,7 +88,7 @@ export default class ReactAntAbstractForm extends Component<
 
   get touchedView() {
     return (
-      <Tooltip title="此处有修改">
+      <Tooltip title='此处有修改'>
         <em style={{ color: '#f60' }}>{this.isTouched && <DiffOutlined />}</em>
       </Tooltip>
     );
@@ -137,7 +137,7 @@ export default class ReactAntAbstractForm extends Component<
           loading={busy}
           icon={<ReloadOutlined />}
           size={'small'}
-          children="刷新"
+          children='刷新'
           onClick={this.load}
         />
         <Button icon={<ArrowLeftOutlined />} size={'small'} onClick={() => history.back()}>
@@ -155,14 +155,14 @@ export default class ReactAntAbstractForm extends Component<
         <Space>
           <Button
             disabled={!this.isTouched}
-            htmlType="submit"
-            type="primary"
+            htmlType='submit'
+            type='primary'
             icon={<SaveOutlined />}
-            children="保存"
+            children='保存'
           />
-          {resetAble && <Button icon={<MehOutlined />} htmlType="reset" children="取消" />}
+          {resetAble && <Button icon={<MehOutlined />} htmlType='reset' children='取消' />}
           {backAble && (
-            <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children="返回" />
+            <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children='返回' />
           )}
         </Space>
       </Form.Item>
@@ -181,7 +181,8 @@ export default class ReactAntAbstractForm extends Component<
    * @template
    * Set init after constructor.
    */
-  init() {}
+  init() {
+  }
 
   /**
    * @template
@@ -235,7 +236,22 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   load = () => {
-    return this.handleResponse();
+    if (this.isEdit) {
+      const data = nx.mix(null, this.params, this.options);
+      const { meta } = this.state;
+      this.setState({ busy: true });
+      return new Promise((resolve) => {
+        this.apiService[`${this.resources}_show`](data).then((res) => {
+          const response = this.transformResponse(res);
+          const resValue = this.fromRawValue(response);
+          nx.mix(meta.initialValues, resValue);
+          this.setState({ meta, busy: false, previousState: resValue });
+          this.formRef.setFieldsValue(resValue);
+          resolve(resValue);
+        });
+      });
+    }
+    return Promise.resolve(this.fieldsValue);
   };
 
   save(inEvent, inRedirect) {
@@ -272,25 +288,6 @@ export default class ReactAntAbstractForm extends Component<
     return this.save(this.fieldsValue, false);
   };
 
-  handleResponse() {
-    if (this.isEdit) {
-      const data = nx.mix(null, this.params, this.options);
-      const { meta } = this.state;
-      this.setState({ busy: true });
-      return new Promise((resolve) => {
-        this.apiService[`${this.resources}_show`](data).then((res) => {
-          const response = this.transformResponse(res);
-          const resValue = this.fromRawValue(response);
-          nx.mix(meta.initialValues, resValue);
-          this.setState({ meta, busy: false, previousState: resValue });
-          this.formRef.setFieldsValue(resValue);
-          resolve(resValue);
-        });
-      });
-    }
-    return Promise.resolve(this.fieldsValue);
-  }
-
   handleFinish = (inEvent) => {
     const { value } = inEvent.target;
     const { redirectAble } = this.actions;
@@ -302,10 +299,6 @@ export default class ReactAntAbstractForm extends Component<
     this.formRef = value;
   };
 
-  handleChange = () => {
-    this.forceUpdate();
-  };
-
   view() {
     const { meta, busy } = this.state;
     const computedBusy = this.rawJSON ? false : busy;
@@ -315,7 +308,7 @@ export default class ReactAntAbstractForm extends Component<
         <FormBuilder
           meta={meta}
           onInit={this.handleInit}
-          onChange={this.handleChange}
+          onChange={() => this.forceUpdate()}
           onFinish={this.handleFinish}
           {...this.getFormProps()}>
           {this.submitView}
