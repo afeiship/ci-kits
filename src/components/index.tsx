@@ -199,7 +199,7 @@ export default class ReactAntAbstractForm extends Component<
   componentDidMount() {
     this.winkeyRes = nx.DomEvent.on(window as any, 'keyup', this.handleWinKeyup);
     setTimeout(() => nx.set(history, 'current', this.props), 0);
-    this.load();
+    !this.isInitManually && this.load();
   }
 
   componentWillUnmount() {
@@ -239,30 +239,20 @@ export default class ReactAntAbstractForm extends Component<
 
   load = () => {
     if (!this.isEdit) return;
-    if (!this.isInitManually) {
-      const { meta } = this.state;
-      const data = nx.mix(null, this.params, this.options);
-      const isInitialFunc = isFun(meta.initialValues);
-      const loader = isInitialFunc ? meta.initialValues : this.apiService[`${this.resources}_show`];
-      this.setState({ loading: true });
-      loader(data).then((res) => {
-        const response = isInitialFunc ? res : this.transformResponse(res);
-        const resValue = this.fromRawValue(response);
-        if (!isInitialFunc) nx.mix(meta.initialValues, resValue);
-        this.setState({ meta, previousState: resValue });
-        this.fieldsValue = resValue;
-      }).finally(() => {
-        this.setState({ loading: false });
-      });
-    }
-
-
-    if (this.isEdit) {
-      const { meta } = this.state;
-      if (isFun(meta.initialValues)) {
-        // meta.initialValues
-      }
-    }
+    const { meta } = this.state;
+    const data = nx.mix(null, this.params, this.options);
+    const isInitialFunc = isFun(meta.initialValues);
+    const loader = isInitialFunc ? meta.initialValues : this.apiService[`${this.resources}_show`];
+    this.setState({ loading: true });
+    loader(data).then((res) => {
+      const response = isInitialFunc ? res : this.transformResponse(res);
+      const resValue = this.fromRawValue(response);
+      if (!isInitialFunc) nx.mix(meta.initialValues, resValue);
+      this.setState({ meta, previousState: resValue });
+      this.fieldsValue = resValue;
+    }).finally(() => {
+      this.setState({ loading: false });
+    });
   };
 
   save(inEvent, inRedirect) {
