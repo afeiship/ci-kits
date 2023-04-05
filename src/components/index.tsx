@@ -29,7 +29,6 @@ const OPERATION_STATUS = [
 ];
 
 const isFun = (target) => typeof target === 'function';
-const INITIAL_VALUES_MSG = 'Not support when initialValues is a function.';
 // By default hotkeys are not enabled for INPUT SELECT TEXTAREA elements
 hotkeys.filter = nx.stubTrue;
 
@@ -84,7 +83,7 @@ export default class ReactAntAbstractForm extends Component<
   constructor(inProps) {
     super(inProps);
     this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
-    this.state = nx.mix(null, { meta: {}, previousState: null, buzy: false }, this.initialState());
+    this.state = nx.mix(null, { meta: {}, previousState: null, loading: false }, this.initialState());
     this.init();
   }
 
@@ -239,20 +238,30 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   load = () => {
-    if (this.isEdit && !this.isInitManually) {
-      const data = nx.mix(null, this.params, this.options);
+    if (!this.isEdit) return;
+    if (!this.isInitManually) {
       const { meta } = this.state;
+      const data = nx.mix(null, this.params, this.options);
+      const isInitialFunc = isFun(meta.initialValues);
+      const loader = isInitialFunc ? meta.initialValues : this.apiService[`${this.resources}_show`];
       this.setState({ loading: true });
-      this.apiService[`${this.resources}_show`](data).then((res) => {
-        const response = this.transformResponse(res);
+      loader(data).then((res) => {
+        const response = isInitialFunc ? res : this.transformResponse(res);
         const resValue = this.fromRawValue(response);
-        if (isFun(meta.initialValues)) return console.warn(INITIAL_VALUES_MSG);
-        nx.mix(meta.initialValues, resValue);
+        if (!isInitialFunc) nx.mix(meta.initialValues, resValue);
         this.setState({ meta, previousState: resValue });
         this.fieldsValue = resValue;
       }).finally(() => {
         this.setState({ loading: false });
       });
+    }
+
+
+    if (this.isEdit) {
+      const { meta } = this.state;
+      if (isFun(meta.initialValues)) {
+        // meta.initialValues
+      }
     }
   };
 
