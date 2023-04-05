@@ -28,6 +28,8 @@ const OPERATION_STATUS = [
   { value: false, color: '#87d068', label: '编辑', action: 'update' }
 ];
 
+const isFun = (target) => typeof target === 'function';
+const INITIAL_VALUES_MSG = 'Not support when initialValues is a function.';
 // By default hotkeys are not enabled for INPUT SELECT TEXTAREA elements
 hotkeys.filter = nx.stubTrue;
 
@@ -198,7 +200,7 @@ export default class ReactAntAbstractForm extends Component<
   componentDidMount() {
     this.winkeyRes = nx.DomEvent.on(window as any, 'keyup', this.handleWinKeyup);
     setTimeout(() => nx.set(history, 'current', this.props), 0);
-    !this.isInitManually && this.load();
+    this.load();
   }
 
   componentWillUnmount() {
@@ -237,13 +239,14 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   load = () => {
-    if (this.isEdit) {
+    if (this.isEdit && !this.isInitManually) {
       const data = nx.mix(null, this.params, this.options);
       const { meta } = this.state;
       this.setState({ loading: true });
       this.apiService[`${this.resources}_show`](data).then((res) => {
         const response = this.transformResponse(res);
         const resValue = this.fromRawValue(response);
+        if (isFun(meta.initialValues)) return console.warn(INITIAL_VALUES_MSG);
         nx.mix(meta.initialValues, resValue);
         this.setState({ meta, previousState: resValue });
         this.fieldsValue = resValue;
