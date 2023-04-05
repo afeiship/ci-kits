@@ -6,7 +6,6 @@ import type { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js/dist/hotkeys';
 import {
   ArrowLeftOutlined,
-  MehOutlined,
   FormOutlined,
   SaveOutlined,
   ReloadOutlined,
@@ -75,12 +74,11 @@ export default class ReactAntAbstractForm extends Component<
   formRef: any;
 
   actions = {
-    resetAble: true,
     backAble: true,
     refreshAble: true,
     redirectAble: true
   };
-  
+
   constructor(inProps) {
     super(inProps);
     this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
@@ -154,7 +152,7 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get submitView() {
-    const { resetAble, backAble } = this.actions;
+    const { backAble } = this.actions;
     const { formItemLayout } = this.state.meta;
     return (
       <Form.Item wrapperCol={{ span: formItemLayout[1], offset: formItemLayout[0] }}>
@@ -166,7 +164,6 @@ export default class ReactAntAbstractForm extends Component<
             icon={<SaveOutlined />}
             children='保存'
           />
-          {resetAble && <Button icon={<MehOutlined />} htmlType='reset' children='取消' />}
           {backAble && (
             <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children='返回' />
           )}
