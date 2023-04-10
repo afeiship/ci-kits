@@ -28,7 +28,6 @@ const OPERATION_STATUS = [
   { value: false, color: '#87d068', label: '编辑', action: 'update' }
 ];
 
-const isFun = (target) => typeof target === 'function';
 // By default hotkeys are not enabled for INPUT SELECT TEXTAREA elements
 hotkeys.filter = nx.stubTrue;
 
@@ -83,13 +82,17 @@ export default class ReactAntAbstractForm extends Component<
   constructor(inProps) {
     super(inProps);
     this.hotkeysRes = registerKey(HOT_KEYS, this.handleHotkey);
-    this.state = nx.mix(null, { meta: {}, previousState: null, loading: false }, this.initialState());
+    this.state = nx.mix(
+      null,
+      { meta: {}, previousState: null, loading: false },
+      this.initialState()
+    );
     this.init();
   }
 
   get touchedView() {
     return (
-      <Tooltip title='此处有修改'>
+      <Tooltip title="此处有修改">
         <em style={{ color: '#f60' }}>{this.isTouched && <DiffOutlined />}</em>
       </Tooltip>
     );
@@ -142,7 +145,7 @@ export default class ReactAntAbstractForm extends Component<
           loading={loading}
           icon={<ReloadOutlined />}
           size={'small'}
-          children='刷新'
+          children="刷新"
           onClick={this.load}
         />
         <Button icon={<ArrowLeftOutlined />} size={'small'} onClick={() => history.back()}>
@@ -160,13 +163,13 @@ export default class ReactAntAbstractForm extends Component<
         <Space>
           <Button
             disabled={!this.isTouched}
-            htmlType='submit'
-            type='primary'
+            htmlType="submit"
+            type="primary"
             icon={<SaveOutlined />}
-            children='保存'
+            children="保存"
           />
           {backAble && (
-            <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children='返回' />
+            <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children="返回" />
           )}
         </Space>
       </Form.Item>
@@ -185,8 +188,7 @@ export default class ReactAntAbstractForm extends Component<
    * @template
    * Set init after constructor.
    */
-  init() {
-  }
+  init() {}
 
   /**
    * @template
@@ -238,21 +240,25 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   load = () => {
-    if (!this.isEdit) return;
     const { meta } = this.state;
     const data = nx.mix(null, this.params, this.options);
-    const isInitialFunc = isFun(meta.initialValues);
-    const loader = isInitialFunc ? meta.initialValues : this.apiService[`${this.resources}_show`];
     this.setState({ loading: true });
-    loader(data).then((res) => {
-      const response = isInitialFunc ? res : this.transformResponse(res);
-      const resValue = this.fromRawValue(response);
-      if (!isInitialFunc) nx.mix(meta.initialValues, resValue);
-      this.setState({ meta, previousState: resValue });
-      this.fieldsValue = resValue;
-    }).finally(() => {
-      this.setState({ loading: false });
-    });
+    this.loader(data)
+      .then((res) => {
+        const response = this.transformResponse(res);
+        const resValue = this.fromRawValue(response);
+        nx.mix(meta.initialValues, resValue);
+        this.setState({ meta, previousState: resValue });
+        this.fieldsValue = resValue;
+      })
+      .finally(() => {
+        this.setState({ loading: false });
+      });
+  };
+
+  loader = (inData): Promise<any> => {
+    if (!this.isEdit) return Promise.resolve();
+    return this.apiService[`${this.resources}_show`](inData);
   };
 
   save(inEvent, inRedirect) {
