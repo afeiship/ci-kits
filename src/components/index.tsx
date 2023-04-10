@@ -69,7 +69,6 @@ export default class ReactAntAbstractForm extends Component<
   options = {};
   rawJSON = false;
   rawField = 'rawJSON';
-  isInitManually = false;
   apiService: any;
   formRef: any;
 
@@ -201,7 +200,7 @@ export default class ReactAntAbstractForm extends Component<
   componentDidMount() {
     this.winkeyRes = nx.DomEvent.on(window as any, 'keyup', this.handleWinKeyup);
     setTimeout(() => nx.set(history, 'current', this.props), 0);
-    !this.isInitManually && this.load();
+    this.load();
   }
 
   componentWillUnmount() {
@@ -249,7 +248,7 @@ export default class ReactAntAbstractForm extends Component<
         const resValue = this.fromRawValue(response);
         nx.mix(meta.initialValues, resValue);
         this.setState({ meta, previousState: resValue });
-        this.fieldsValue = resValue;
+        setTimeout(() => (this.fieldsValue = resValue));
       })
       .finally(() => {
         this.setState({ loading: false });
