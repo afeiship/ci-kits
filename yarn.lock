@@ -1287,10 +1287,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@jswork/antd-form-builder@^1.1.15":
-  version "1.1.15"
-  resolved "https://registry.npmjs.org/@jswork/antd-form-builder/-/antd-form-builder-1.1.15.tgz#dd47ceda8f228edb22820d005adb7b3b57c34283"
-  integrity sha512-qhsQAPNLbm8rG02stOskjKD0e9wqL90pI3wmXBJV8lI3CL+IJq6HpkWRpfSTjgSVS7Xo64aJAMCj+e5G4I83BA==
+"@jswork/antd-form-builder@^1.1.17":
+  version "1.1.17"
+  resolved "https://registry.npmmirror.com/@jswork/antd-form-builder/-/antd-form-builder-1.1.17.tgz#69a2cece67eed5c3042665bc4fc140e4870c0987"
+  integrity sha512-wrII2/pyPLRezCtUOJm1fO61Ys4IkKHMapqn61oBwd3bK/17OBLYgjfWT09NsUmavNFv/KsrKLWuiZaIvFcEOg==
   dependencies:
     "@jswork/noop" "^1.0.0"
     antd-form-builder "^2.1.4"

@@ -306,20 +306,27 @@ export default class ReactAntAbstractForm extends Component<
     this.formRef = value;
   };
 
+  formBuilder() {
+    const { meta } = this.state;
+    return (
+      <FormBuilder
+        meta={meta}
+        onInit={this.handleInit}
+        onChange={() => this.forceUpdate()}
+        onFinish={this.handleFinish}
+        {...this.getFormProps()}>
+        {this.submitView}
+      </FormBuilder>
+    );
+  }
+
   view() {
-    const { meta, loading } = this.state;
+    const { loading } = this.state;
     const computedBusy = this.rawJSON ? false : loading;
 
     return (
       <Card loading={computedBusy} size={this.size} title={this.titleView} extra={this.extraView}>
-        <FormBuilder
-          meta={meta}
-          onInit={this.handleInit}
-          onChange={() => this.forceUpdate()}
-          onFinish={this.handleFinish}
-          {...this.getFormProps()}>
-          {this.submitView}
-        </FormBuilder>
+        {this.formBuilder()}
       </Card>
     );
   }
