@@ -216,7 +216,7 @@ export default class ReactAntAbstractForm extends Component<
    * Transform value from api response.
    * @param inValue
    */
-  valueDidSave(inValue) {
+  dataDidSave(inValue) {
     return this.rawJSON ? { [this.rawField]: JSON.stringify(inValue, null, 2) } : inValue;
   }
 
@@ -225,7 +225,7 @@ export default class ReactAntAbstractForm extends Component<
    * Transform value before save.
    * @param inValue
    */
-  valueWillSave(inValue) {
+  dataWillSave(inValue) {
     return this.rawJSON ? JSON.parse(inValue[this.rawField]) : inValue;
   }
 
@@ -235,7 +235,7 @@ export default class ReactAntAbstractForm extends Component<
     this.setState({ loading: true });
     this.loader(data)
       .then((res) => {
-        const response = this.valueDidSave(res);
+        const response = this.dataDidSave(res);
         nx.mix(meta.initialValues, response);
         this.setState({ meta, previousState: response });
         setTimeout(() => (this.fieldsValue = response));
@@ -257,7 +257,7 @@ export default class ReactAntAbstractForm extends Component<
     if (!this.isTouched) return message.info(MESSAGES.CONTENT_NO_CHANGED);
 
     return new Promise((resolve, reject) => {
-      const payload = this.valueWillSave(data);
+      const payload = this.dataWillSave(data);
       this.apiService[`${this.resources}_${action}`](payload)
         .then((res) => {
           void message.success(MESSAGES.OPERATION_DONE);
