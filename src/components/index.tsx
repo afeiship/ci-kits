@@ -213,28 +213,19 @@ export default class ReactAntAbstractForm extends Component<
 
   /**
    * @template
-   * @param {*} inData
-   * @returns
-   */
-  transformResponse(inData) {
-    return inData;
-  }
-
-  /**
-   * @template
-   * Get value from api response.
+   * Transform value from api response.
    * @param inValue
    */
-  fromRawValue(inValue) {
+  valueDidSave(inValue) {
     return this.rawJSON ? { [this.rawField]: JSON.stringify(inValue, null, 2) } : inValue;
   }
 
   /**
    * @template
-   * Transform value to submit.
+   * Transform value before save.
    * @param inValue
    */
-  toRawValue(inValue) {
+  valueWillSave(inValue) {
     return this.rawJSON ? JSON.parse(inValue[this.rawField]) : inValue;
   }
 
@@ -244,11 +235,10 @@ export default class ReactAntAbstractForm extends Component<
     this.setState({ loading: true });
     this.loader(data)
       .then((res) => {
-        const response = this.transformResponse(res);
-        const resValue = this.fromRawValue(response);
-        nx.mix(meta.initialValues, resValue);
-        this.setState({ meta, previousState: resValue });
-        setTimeout(() => (this.fieldsValue = resValue));
+        const response = this.valueDidSave(res);
+        nx.mix(meta.initialValues, response);
+        this.setState({ meta, previousState: response });
+        setTimeout(() => (this.fieldsValue = response));
       })
       .finally(() => {
         this.setState({ loading: false });
@@ -262,13 +252,13 @@ export default class ReactAntAbstractForm extends Component<
 
   save(inEvent, inRedirect) {
     const action = this.isEdit ? 'update' : 'create';
-    const value = this.toRawValue(inEvent);
     const shouldRefresh = this.isEdit && this.actions.refreshAble;
-    const data = nx.mix(null, this.params, value, this.options);
+    const data = nx.mix(null, this.params, inEvent, this.options);
     if (!this.isTouched) return message.info(MESSAGES.CONTENT_NO_CHANGED);
 
     return new Promise((resolve, reject) => {
-      this.apiService[`${this.resources}_${action}`](data)
+      const payload = this.valueWillSave(data);
+      this.apiService[`${this.resources}_${action}`](payload)
         .then((res) => {
           void message.success(MESSAGES.OPERATION_DONE);
           inRedirect && history.back();
