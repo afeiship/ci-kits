@@ -74,7 +74,7 @@ export default class ReactAntAbstractForm extends Component<
 
   actions = {
     backAble: true,
-    refreshAble: true,
+    refreshAble: false,
     redirectAble: true
   };
 
@@ -263,6 +263,7 @@ export default class ReactAntAbstractForm extends Component<
   save(inEvent, inRedirect) {
     const action = this.isEdit ? 'update' : 'create';
     const value = this.toRawValue(inEvent);
+    const shouldRefresh = this.isEdit && this.actions.refreshAble;
     const data = nx.mix(null, this.params, value, this.options);
     if (!this.isTouched) return message.info(MESSAGES.CONTENT_NO_CHANGED);
 
@@ -271,7 +272,7 @@ export default class ReactAntAbstractForm extends Component<
         .then((res) => {
           void message.success(MESSAGES.OPERATION_DONE);
           inRedirect && history.back();
-          this.isEdit && this.load();
+          shouldRefresh && this.load();
           this.setState({ previousState: this.fieldsValue });
           resolve(res);
         })
