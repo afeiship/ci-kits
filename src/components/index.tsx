@@ -282,7 +282,7 @@ export default class ReactAntAbstractForm extends Component<
 
   handleWinKeyup = () => {
     const title = document.title;
-    const hasMarked = title.includes('*');
+    const hasMarked = title.startsWith('*');
     if (this.isTouched) {
       !hasMarked && (document.title = title + '*');
     } else {
