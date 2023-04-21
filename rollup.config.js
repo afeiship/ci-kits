@@ -1,11 +1,9 @@
 import typescript from 'rollup-plugin-typescript2';
-// import external from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import copy from 'rollup-plugin-copy';
 import scss from 'rollup-plugin-scss';
 import externals from 'rollup-plugin-node-externals';
 import banner from 'rollup-plugin-banner';
-import { terser } from 'rollup-plugin-terser';
 import replace from '@rollup/plugin-replace';
 
 import pkg from './package.json';
@@ -47,10 +45,9 @@ export default [
         // Make pkg.peerDependencies external. Optional. Default: true
         peerDeps: true
       }),
-
       resolve(),
       replace({ __VERSION__: pkg.version, preventAssignment: true }),
-      terser({ output: { comments: false } }),
+      // terser({ output: { comments: false } }),
       banner(nx.rollupBanner()),
       typescript({
         tsconfig: 'tsconfig.build.json',
