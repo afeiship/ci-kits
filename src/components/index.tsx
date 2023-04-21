@@ -133,7 +133,7 @@ export default class ReactAntAbstractForm extends Component<
   get isTouched() {
     const { previousState } = this.state;
     if (!this.formRef || !previousState) return false;
-    return deepEqual(previousState, this.fieldsValue);
+    return !deepEqual(previousState, this.fieldsValue);
   }
 
   get extraView() {
