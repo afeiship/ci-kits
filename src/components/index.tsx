@@ -216,7 +216,7 @@ export default class ReactAntAbstractForm extends Component<
    * Transform value from api response.
    * @param inValue
    */
-  dataDidSave(inValue) {
+  dataDidLoad(inValue) {
     return this.rawJSON ? { [this.rawField]: JSON.stringify(inValue, null, 2) } : inValue;
   }
 
@@ -235,7 +235,7 @@ export default class ReactAntAbstractForm extends Component<
     this.setState({ loading: true });
     this.loader(data)
       .then((res) => {
-        const response = this.dataDidSave(res);
+        const response = this.dataDidLoad(res);
         nx.mix(meta.initialValues, response);
         this.setState({ meta, previousState: response });
         setTimeout(() => (this.fieldsValue = response));
