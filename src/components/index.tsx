@@ -130,7 +130,6 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get isTouched() {
-    if (!this.rawJSON) return this.formRef?.isFieldsTouched();
     const { previousState } = this.state;
     if (!this.formRef || !previousState) return false;
     return JSON.stringify(previousState) !== JSON.stringify(this.fieldsValue);
