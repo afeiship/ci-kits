@@ -122,7 +122,7 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get fieldsValue() {
-    return this.formRef?.getFieldsValue();
+    return this.formRef?.getFieldsValue(true);
   }
 
   set fieldsValue(inValue) {
@@ -237,7 +237,7 @@ export default class ReactAntAbstractForm extends Component<
         const response = this.dataDidLoad(res);
         nx.mix(meta.initialValues, response);
         this.setState({ meta, previousState: response });
-        setTimeout(() => (this.fieldsValue = response));
+        this.fieldsValue = response;
       })
       .finally(() => {
         this.setState({ loading: false });
