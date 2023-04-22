@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Tag, Form, Card, Button, message, Tooltip, Space } from 'antd';
 import { FormBuilder } from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
-import deepEqual from 'deep-equal';
+import deepEqual from 'fast-deep-equal';
 import type { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js/dist/hotkeys';
 import {
@@ -92,7 +92,7 @@ export default class ReactAntAbstractForm extends Component<
 
   get touchedView() {
     return (
-      <Tooltip title="此处有修改">
+      <Tooltip title='此处有修改'>
         <em style={{ color: '#f60' }}>{this.isTouched && <DiffOutlined />}</em>
       </Tooltip>
     );
@@ -141,10 +141,11 @@ export default class ReactAntAbstractForm extends Component<
     return (
       <Space>
         <Button
+          disabled={loading}
           loading={loading}
           icon={<ReloadOutlined />}
           size={'small'}
-          children="刷新"
+          children='刷新'
           onClick={this.load}
         />
         <Button icon={<ArrowLeftOutlined />} size={'small'} onClick={() => history.back()}>
@@ -162,13 +163,13 @@ export default class ReactAntAbstractForm extends Component<
         <Space>
           <Button
             disabled={!this.isTouched}
-            htmlType="submit"
-            type="primary"
+            htmlType='submit'
+            type='primary'
             icon={<SaveOutlined />}
-            children="保存"
+            children='保存'
           />
           {backAble && (
-            <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children="返回" />
+            <Button icon={<ArrowLeftOutlined />} onClick={() => history.back()} children='返回' />
           )}
         </Space>
       </Form.Item>
@@ -187,7 +188,8 @@ export default class ReactAntAbstractForm extends Component<
    * @template
    * Set init after constructor.
    */
-  init() {}
+  init() {
+  }
 
   /**
    * @template
