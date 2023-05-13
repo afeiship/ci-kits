@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Tag, Form, Card, Button, message, Tooltip, Space } from 'antd';
 import { FormBuilder } from '@jswork/antd-form-builder';
 import nx from '@jswork/next';
-// import deepEqual from 'fast-deep-equal';
+import deepEqual from 'fast-deep-equal';
 import type { CardSize } from 'antd/lib/card/Card';
 import hotkeys from 'hotkeys-js/dist/hotkeys';
 import {
@@ -131,11 +131,10 @@ export default class ReactAntAbstractForm extends Component<
   }
 
   get isTouched() {
-    // const { previousState } = this.state;
-    // if (!this.isEdit) return this.formRef?.isFieldsTouched();
-    // if (!this.formRef || !previousState) return false;
-    // return !deepEqual(previousState, this.fieldsValue);
-    return this.formRef?.isFieldsTouched();
+    const { previousState } = this.state;
+    if (!this.isEdit) return this.formRef?.isFieldsTouched();
+    if (!this.formRef || !previousState) return false;
+    return !deepEqual(previousState, this.fieldsValue);
   }
 
   get extraView() {
