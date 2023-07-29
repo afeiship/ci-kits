@@ -28,10 +28,10 @@
   "devDependencies": {
     "@ant-design/icons": "^5.0.1",
     "@babel/core": "^7.12.10",
-    "@jswork/next": "^1.1.5",
+    "@jswork/next": "^1.1.11",
     "@jswork/next-replace-in-file": "^1.0.0",
     "@jswork/next-rollup-banner": "^1.0.9",
-    "@jswork/react-codeflask": "^1.0.7",
+    "@jswork/react-codeflask": "^1.0.9",
     "@jswork/react-fade-image": "^1.0.0",
     "@jswork/react-markdown-props": "^1.0.1",
     "@jswork/react-upload-media": "^1.1.5",
@@ -79,10 +79,10 @@
     "vite-plugin-pwa": "^0.7.3"
   },
   "dependencies": {
-    "@jswork/antd-form-builder": "^1.1.17",
-    "@jswork/next-dom-event": "^1.0.4",
-    "@jswork/next-get2get": "^1.0.1",
-    "@jswork/next-is-empty-object": "^1.0.2",
+    "@jswork/antd-form-builder": "^1.1.19",
+    "@jswork/next-dom-event": "^1.0.7",
+    "@jswork/next-get2get": "^1.0.6",
+    "@jswork/next-is-empty-object": "^1.0.4",
     "@jswork/noop": "^1.0.0",
     "classnames": "^2.2.6",
     "fast-deep-equal": "^3.1.3",
