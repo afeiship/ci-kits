@@ -1,6 +1,6 @@
 {
   "name": "@jswork/ci-kits",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Streamlined CI/CD tools.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
