@@ -15,7 +15,8 @@ describe('01-api.envname', () => {
 
   test('02.envname -> simulate npm_lifecycle_event with ":"', () => {
     process.env.npm_lifecycle_event = 'build:dev';
-    expect(envname()).toBe('dev');
+    expect(envname(true)).toBe('dev');
+    expect(envname()).toBe('development');
   });
 
   test('03.envname -> simulate npm_lifecycle_event without ":"', () => {

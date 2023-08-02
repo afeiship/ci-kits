@@ -3,7 +3,7 @@ const ENV_HOOKS = {
   dev: 'development',
 };
 
-export default () => {
+export default (inForce?: boolean) => {
   const { npm_lifecycle_event, CI_ENVIRONMENT_NAME } = process.env;
 
   // gitlab-ci: environment:name
@@ -14,6 +14,6 @@ export default () => {
   if (npm_lifecycle_event) {
     const parts = npm_lifecycle_event.split(':');
     const env = parts.length > 1 ? parts[1] : parts[0];
-    return env || ENV_HOOKS[env];
+    return inForce ? env : ENV_HOOKS[env] || env;
   }
 };
