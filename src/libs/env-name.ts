@@ -6,5 +6,8 @@ export default () => {
 
   // npm run build:dev -> dev
   // npm run build:prod -> prod
-  if (npm_lifecycle_event) return npm_lifecycle_event.split(':')[1];
+  if (npm_lifecycle_event) {
+    const parts = npm_lifecycle_event.split(':');
+    return parts.length > 1 ? parts[1] : parts[0];
+  }
 };
