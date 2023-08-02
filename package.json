@@ -1,103 +1,55 @@
 {
-  "name": "@jswork/react-ant-abstract-form",
-  "boilerplate": "react-ant-abstract-form",
-  "version": "1.2.64",
-  "description": "For curd form based on react.",
-  "license": "MIT",
+  "name": "@jswork/ci-kits",
+  "version": "1.0.0",
+  "description": "Streamlined CI/CD tools.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "typings": "dist/main.d.ts",
-  "files": [
-    "dist"
-  ],
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "dev": "vite",
-    "clean": "rimraf dist",
-    "predocs": "node build/markdown.js",
-    "build": "npm run clean && rollup -c",
-    "docs": "tsc && vite build",
-    "docs:serve": "vite preview",
+    "build": "gulp",
     "test": "jest",
-    "pages": "github-cli -p",
     "release": "release-it"
   },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
-  },
+  "license": "MIT",
   "devDependencies": {
-    "@ant-design/icons": "^5.0.1",
-    "@babel/core": "^7.12.10",
-    "@jswork/next": "^1.1.11",
-    "@jswork/next-replace-in-file": "^1.0.0",
-    "@jswork/next-rollup-banner": "^1.0.9",
-    "@jswork/react-codeflask": "^1.0.9",
-    "@jswork/react-fade-image": "^1.0.0",
-    "@jswork/react-markdown-props": "^1.0.1",
-    "@jswork/react-upload-media": "^1.1.5",
-    "@jswork/react-upload-self": "^1.1.4",
-    "@jswork/wsui-frame-wrapper": "^1.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.1",
-    "@rollup/plugin-replace": "^2.3.4",
-    "@types/jest": "^26.0.19",
-    "@types/react": "^18.0.14",
-    "@types/react-dom": "^18.0.5",
-    "@types/react-test-renderer": "^17.0.0",
-    "@types/styled-components": "^5.1.9",
-    "@vitejs/plugin-react-refresh": "^1.3.1",
-    "antd": "^5.0.3",
-    "babel-loader": "^8.2.2",
-    "core-js": "^3.8.2",
-    "css-loader": "^5.0.1",
-    "indent-string": "^5.0.0",
-    "jest": "^26.6.3",
-    "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts-ts": "^3.1.0",
-    "react-test-renderer": "^17.0.1",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.36.0",
-    "rollup-plugin-auto-external": "^2.0.0",
-    "rollup-plugin-banner": "^0.2.1",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-copy": "^3.3.0",
-    "rollup-plugin-external-globals": "^0.6.1",
-    "rollup-plugin-node-externals": "^2.2.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-scss": "3",
-    "rollup-plugin-typescript2": "^0.29.0",
-    "sass": "^1.32.0",
-    "sass-loader": "^10.1.0",
-    "style-loader": "^2.0.0",
-    "styled-components": "^5.3.0",
-    "ts-jest": "^26.4.4",
-    "tslib": "^2.3.1",
-    "typescript": "^4.1.3",
-    "vite": "^2.3.4",
-    "vite-plugin-pwa": "^0.7.3"
-  },
-  "dependencies": {
-    "@jswork/antd-form-builder": "^1.1.23",
-    "@jswork/next-dom-event": "^1.0.7",
-    "@jswork/next-get2get": "^1.0.6",
-    "@jswork/next-is-empty-object": "^1.0.4",
-    "@jswork/noop": "^1.0.0",
-    "classnames": "^2.2.6",
-    "fast-deep-equal": "^3.1.3",
-    "hotkeys-js": "^3.8.7"
+    "@babel/core": "^7.21.3",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.21.0",
+    "@jswork/gulp-pkg-header": "^1.0.8",
+    "@jswork/gulp-registry": "^1.0.21",
+    "@jswork/next": "^1.1.5",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.5",
+    "babel-jest": "^29.5.0",
+    "del": "^6.0.0",
+    "esbuild": "^0.17.12",
+    "esbuild-node-externals": "^1.6.0",
+    "esbuild-plugin-clean": "^1.0.1",
+    "esbuild-plugin-replace": "^1.3.0",
+    "gulp": "^4.0.2",
+    "gulp-esbuild": "^0.11.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "jest": "^29.5.0",
+    "typescript": "^4.9.5"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "keywords": [
-    "react",
-    "ant",
-    "abstract",
-    "form",
-    "shema",
-    "curd"
-  ]
+  "boilerplate": "generator-typescript",
+  "homepage": "https://js.work",
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      "@babel/preset-typescript"
+    ]
+  }
 }

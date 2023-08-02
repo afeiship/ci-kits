@@ -1,5 +1,5 @@
-# react-ant-abstract-form
-> For curd form based on react.
+# ci-kits
+> Streamlined CI/CD tools.
 
 [![version][version-image]][version-url]
 [![license][license-image]][license-url]
@@ -8,130 +8,27 @@
 
 ## installation
 ```shell
-npm install -S @jswork/react-ant-abstract-form
+npm install @jswork/ci-kits
 ```
 
 ## usage
-1. import css
-  ```scss
-  @import "~@jswork/react-ant-abstract-form/dist/style.css";
+```js
+import ciKits from '@jswork/ci-kits';
 
-  // or use sass
-  @import "~@jswork/react-ant-abstract-form/dist/style.scss";
-
-  // customize your styles:
-  $react-ant-abstract-form-options: ()
-  ```
-2. import js
-  ```js
-  import React from 'react';
-  import ReactAntAbstractForm from '@jswork/react-ant-abstract-form';
-  import styled from 'styled-components';
-  import nx from '@jswork/next';
-
-  const Container = styled.div`
-    width: 80%;
-    margin: 30px auto 0;
-    .is-body {
-      padding: 20px;
-      background: #fff;
-      width: 50%;
-      min-width: 320px;
-      margin: 0 auto;
-    }
-
-    .mr-5_ {
-      > * {
-        margin-right: 5px;
-      }
-    }
-
-    .mr-10_ {
-      > * {
-        margin-right: 10px;
-      }
-    }
-  `;
-
-  // Mock api
-  nx.$api = {
-    curds_index: function () {
-      return Promise.resolve('index');
-    },
-    curds_show: function () {
-      return Promise.resolve('show');
-    },
-    curds_update: function () {
-      return Promise.resolve('update');
-    }
-  };
-
-  nx.$route = {
-    back: function () {
-      console.log('back');
-    }
-  };
-
-  class App extends ReactAntAbstractForm {
-    apiService = nx.$api;
-    routeService = nx.$route;
-
-    constructor(props) {
-      super(props);
-      this.state = {
-        meta: {
-          formItemLayout: [6, 18],
-          initialValues: {},
-          fields: [
-            {
-              key: 'username',
-              label: 'User Name',
-              tooltip: '用户名',
-              rules: [{ max: 10, min: 5 }]
-            },
-            { key: 'password', label: 'Password', widget: 'password' }
-          ]
-        }
-      };
-    }
-
-    componentDidMount() {
-      const { meta } = this.state;
-      meta.initialValues = {
-        username: 'afeiship'
-      };
-      this.setState({ meta });
-    }
-
-    render() {
-      return this.view();
-    }
-  }
-
-  export default () => {
-    return (
-      <Container>
-        <App />
-      </Container>
-    );
-  };
-
-  ```
-
-## preview
-- https://afeiship.github.io/react-ant-abstract-form/
+// usage goes here.
+```
 
 ## license
-Code released under [the MIT license](https://github.com/afeiship/react-ant-abstract-form/blob/master/LICENSE.txt).
+Code released under [the MIT license](https://github.com/afeiship/ci-kits/blob/master/LICENSE.txt).
 
-[version-image]: https://img.shields.io/npm/v/@jswork/react-ant-abstract-form
-[version-url]: https://npmjs.org/package/@jswork/react-ant-abstract-form
+[version-image]: https://img.shields.io/npm/v/@jswork/ci-kits
+[version-url]: https://npmjs.org/package/@jswork/ci-kits
 
-[license-image]: https://img.shields.io/npm/l/@jswork/react-ant-abstract-form
-[license-url]: https://github.com/afeiship/react-ant-abstract-form/blob/master/LICENSE.txt
+[license-image]: https://img.shields.io/npm/l/@jswork/ci-kits
+[license-url]: https://github.com/afeiship/ci-kits/blob/master/LICENSE.txt
 
-[size-image]: https://img.shields.io/bundlephobia/minzip/@jswork/react-ant-abstract-form
-[size-url]: https://github.com/afeiship/react-ant-abstract-form/blob/master/dist/react-ant-abstract-form.min.js
+[size-image]: https://img.shields.io/bundlephobia/minzip/@jswork/ci-kits
+[size-url]: https://github.com/afeiship/ci-kits/blob/master/dist/ci-kits.min.js
 
-[download-image]: https://img.shields.io/npm/dm/@jswork/react-ant-abstract-form
-[download-url]: https://www.npmjs.com/package/@jswork/react-ant-abstract-form
+[download-image]: https://img.shields.io/npm/dm/@jswork/ci-kits
+[download-url]: https://www.npmjs.com/package/@jswork/ci-kits

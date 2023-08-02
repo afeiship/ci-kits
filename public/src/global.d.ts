@@ -1,3 +1,0 @@
-interface NxStatic {
-  $api: any;
-}
