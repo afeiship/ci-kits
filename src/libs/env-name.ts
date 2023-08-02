@@ -1,3 +1,8 @@
+const ENV_HOOKS = {
+  prod: 'production',
+  dev: 'development',
+};
+
 export default () => {
   const { npm_lifecycle_event, CI_ENVIRONMENT_NAME } = process.env;
 
@@ -8,6 +13,7 @@ export default () => {
   // npm run build:prod -> prod
   if (npm_lifecycle_event) {
     const parts = npm_lifecycle_event.split(':');
-    return parts.length > 1 ? parts[1] : parts[0];
+    const env = parts.length > 1 ? parts[1] : parts[0];
+    return env || ENV_HOOKS[env];
   }
 };
