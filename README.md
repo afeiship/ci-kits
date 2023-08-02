@@ -13,9 +13,10 @@ npm install @jswork/ci-kits
 
 ## usage
 ```js
-import ciKits from '@jswork/ci-kits';
+import { envname } from '@jswork/ci-kits';
 
-// usage goes here.
+// getenv name:
+const envName = envname(); // beta/dev
 ```
 
 ## license
